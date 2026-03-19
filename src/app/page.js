@@ -73,10 +73,10 @@ export default function Home() {
           onClick={handleEnter}
           className={`group relative px-10 py-5 mt-6 cursor-pointer overflow-hidden transition-all duration-[3000ms] ease-out 
             
-            /* ESTADO ANJO (Padrão): Bordas brancas brilhantes, fundo de vidro claro */
+            
             border-2 border-white/60 bg-white/10 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.1)]
             
-            /* ESTADO DEMÔNIO (Hover): Borda sangrenta, fundo negro, sombra neon vermelha */
+            
             hover:border-red-600 hover:bg-black hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] hover:duration-500
             
             ${!isLoaded ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0 delay-[6500ms] pointer-events-auto'}
