@@ -52,7 +52,7 @@ export default function Bastidores() {
           <a href="/santuario" className={`${cinzel.className} text-xl tracking-widest text-neutral-100 hover:text-amber-600 transition-colors`}>O TRONO VAZIO</a>
           <div className="hidden md:flex gap-8 text-xs tracking-widest text-neutral-400 font-medium uppercase">
             <a href="/santuario" className="hover:text-red-500 transition-colors">A Obra</a>
-            <a href="#" className="hover:text-red-500 transition-colors">O Códex</a>
+            <a href="/codex" className="hover:text-red-500 transition-colors">O Códex</a>
             <a href="/bastidores" className="text-red-600 transition-colors">Bastidores</a>
           </div>
         </div>
