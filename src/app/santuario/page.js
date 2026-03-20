@@ -36,7 +36,7 @@ export default function SantuarioHome() {
           <div className="hidden md:flex gap-8 text-xs tracking-widest text-neutral-400 font-medium uppercase">
             <a href="#" className="hover:text-red-500 transition-colors">A Obra</a>
             <a href="#" className="hover:text-red-500 transition-colors">O Códex</a>
-            <a href="#" className="hover:text-red-500 transition-colors">Bastidores</a>
+            <a href="/bastidores" className="hover:text-red-500 transition-colors">Bastidores</a>
           </div>
         </div>
       </nav>
