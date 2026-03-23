@@ -18,8 +18,8 @@ export default function SantuarioHome() {
     { nome: 'Sereth', titulo: 'O Enigma', desc: 'A bengala dita o ritmo de passos que escondem segredos profundos.' },
     { nome: 'Ha-Neul (Hana)', titulo: 'A Lâmina', desc: 'A precisão forjada nas sombras de um passado distante.' },
     { nome: 'Maria', titulo: 'A Devota', desc: 'A fé inabalável guiando o grupo pela escuridão.' },
-    { nome: 'Tom', titulo: 'O Estrategista', desc: 'A mente que calcula cada movimento no tabuleiro.' },
-    { nome: 'Lea', titulo: 'A Sombra', desc: 'Os passos silenciosos que ninguém vê chegar.' },
+    { nome: 'Thomas (Tom)', titulo: 'O Protetor', desc: 'A mente que calcula cada movimento no tabuleiro.' },
+    { nome: 'Leanor (Lea)', titulo: 'A Sombra', desc: 'Os passos silenciosos que ninguém vê chegar.' },
   ];
 
   return (

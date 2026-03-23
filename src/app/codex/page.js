@@ -25,25 +25,61 @@ export default function Codex() {
       id: 'sereth',
       nome: 'Sereth',
       titulo: 'O Enigma',
-      imagem: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=800&auto=format&fit=crop', // Temporária
+      imagem: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop', // Temporária
       idade: 'Desconhecida',
-      altura: '1.85m',
-      gostos: 'Silêncio, xadrez, noites sem lua',
+      altura: '2,03m',
+      gostos: 'Silêncio, xadrez, leitura',
       desgostos: 'Perguntas indiscretas, multidões',
-      historia: 'Pouco se sabe sobre o passado de Sereth antes de sua chegada. Sua bengala dita um ritmo hipnótico e esconde mais do que apenas uma falha no andar. Ele carrega consigo segredos antigos e um olhar que parece ler a alma daqueles que ousam encará-lo por muito tempo.'
+      historia: 'Pouco se sabe sobre o passado de Sereth antes de sua chegada. Ele carrega consigo segredos antigos e um olhar que parece ler a alma daqueles que ousam encará-lo por muito tempo.'
     },
     {
       tipo: 'Personagem',
       id: 'hana',
       nome: 'Ha-Neul (Hana)',
       titulo: 'A Lâmina',
-      imagem: 'https://images.unsplash.com/photo-1534446583901-b8ab2a3c7467?q=80&w=800&auto=format&fit=crop', // Temporária
+      imagem: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop', // Temporária
       idade: '24',
-      altura: '1.70m',
-      gostos: 'Lâminas afiadas, disciplina, tempestades',
+      altura: '1.65m',
+      gostos: 'café, musica, tatuagem, filmes de terror',
       desgostos: 'Hesitação, traição',
       historia: 'Forjada nas sombras de um passado que ela tenta esquecer, Hana é a precisão em forma humana. Cada movimento seu é calculado, cada palavra é letal. Ela encontrou no grupo uma utilidade para suas habilidades, mas a lealdade verdadeira ainda é algo que ela guarda a sete chaves.'
     },
+    {
+      tipo: 'Personagem',
+      id: 'maria',
+      nome: 'Maria B',
+      titulo: 'A Devota',
+      imagem: 'https://images.unsplash.com/photo-1519068737630-e5db30e12e42?q=80&w=800&auto=format&fit=crop', // Temporária
+      idade: '27',
+      altura: '1.69m',
+      gostos: 'leitura, terror, adrenalina, liberdade',
+      desgostos: 'Solidão, esquecimento, confinamento',
+      historia: 'Sua linhagem remonta aos mais antigos reis ingleses, um passado não muito colorido marca sua história, sua vida salva e guiada pelo Anjo Prateado, tem tudo para ir no rumo que ela sempre quis.'
+    },
+      {
+      tipo: 'Personagem',
+      id: 'lea',
+      nome: 'Leanor (Lea)',
+      titulo: 'A Sombra',
+      imagem: 'https://images.unsplash.com/photo-1705405740030-2d78f67b4b9a?q=80&w=800&auto=format&fit=crop', // Temporária
+      idade: '157',
+      altura: '1.75m',
+      gostos: 'Mar, Atletismo, Pessoas Inteligentes, Deus',
+      desgostos: 'Prisão, correntes, ser posta à mostra (modelo)',
+      historia: 'Leanor busca somente uma coisa, paz. A paz que ela nunca teve na vida, o trabalho de caçadora foi um meio que ela encontrou de tentar uma redenção pelo que é, e um dia enfim poder obter a paz que tanto almeja.'
+    },
+          {
+      tipo: 'Personagem',
+      id: 'tom',
+      nome: 'Thomas (Tom)',
+      titulo: 'O Escudo',
+      imagem: 'https://images.unsplash.com/photo-1738697216532-aae28e6dffaa?q=80&w=800&auto=format&fit=crop', // Temporária
+      idade: '157',
+      altura: '1.89m',
+      gostos: 'Cerveja, animais, esportes, dinheiro',
+      desgostos: 'Maldade, violência, guerra',
+      historia: 'Tom já foi ambicioso, já quis ter sucesso, mas hoje a felicidade da irmã basta para ele, o trauma de guerras vividas mudou sua forma de enxergar o mundo.'
+    }
     // Adicionei apenas 2 completos para você ver o exemplo, depois você preenche os outros!
   ];
 

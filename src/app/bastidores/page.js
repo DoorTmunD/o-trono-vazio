@@ -32,7 +32,7 @@ export default function Bastidores() {
       tag: 'Arte',
       titulo: 'O Rosto do Enigma',
       imagem: '', // Deixei sem imagem para você ver como o card se adapta
-      texto: `Hoje passei a madrugada iterando os prompts para chegar na arte conceitual definitiva de Sereth. A bengala e o olhar precisavam transmitir o peso dos segredos que ele carrega. Em breve adicionarei a versão em alta resolução na Enciclopédia (Códex), mas já adianto: o resultado ficou além do que eu imaginava.`,
+      texto: `Hoje passei a madrugada testando os prompts para chegar na arte conceitual definitiva de Sereth. A bengala e o olhar precisavam transmitir o peso dos segredos que ele carrega. Em breve adicionarei a versão em alta resolução na Enciclopédia (Códex), mas já adianto: o resultado ficou além do que eu imaginava.`,
     }
   ];
 
