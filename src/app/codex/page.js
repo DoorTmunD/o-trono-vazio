@@ -56,7 +56,7 @@ export default function Codex() {
       desgostos: 'Solidão, esquecimento, confinamento',
       historia: 'Sua linhagem remonta aos mais antigos reis ingleses, um passado não muito colorido marca sua história, sua vida salva e guiada pelo Anjo Prateado, tem tudo para ir no rumo que ela sempre quis.'
     },
-      {
+    {
       tipo: 'Personagem',
       id: 'lea',
       nome: 'Leanor (Lea)',
@@ -68,7 +68,7 @@ export default function Codex() {
       desgostos: 'Prisão, correntes, ser posta à mostra (modelo)',
       historia: 'Leanor busca somente uma coisa, paz. A paz que ela nunca teve na vida, o trabalho de caçadora foi um meio que ela encontrou de tentar uma redenção pelo que é, e um dia enfim poder obter a paz que tanto almeja.'
     },
-          {
+    {
       tipo: 'Personagem',
       id: 'tom',
       nome: 'Thomas (Tom)',
