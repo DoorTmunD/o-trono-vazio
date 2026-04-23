@@ -103,9 +103,13 @@ export default function Bastidores() {
         {/* As Postagens */}
         <div className="space-y-32 relative z-10">
           {postsFiltrados.map((post, index) => (
-            <div key={post.id} className={`relative flex flex-col md:flex-row items-center md:justify-between group transition-all duration-1000 delay-[${800 + (index * 200)}ms]
-              ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}
-            `}>
+            <div
+              key={post.id}
+              className={`relative flex flex-col md:flex-row items-center md:justify-between group transition-all duration-1000
+                ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}
+              `}
+              style={{ transitionDelay: `${800 + index * 200}ms` }}
+            >
               
               {/* O Ponto de Luz na Linha */}
               <div className="absolute left-0 md:left-1/2 w-4 h-4 bg-black border-2 border-red-800 rounded-full -translate-x-1/2 mt-6 md:mt-0 z-20 group-hover:bg-amber-500 group-hover:border-amber-500 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-500"></div>
@@ -123,12 +127,11 @@ export default function Bastidores() {
                   
                   {post.imagem && (
                     <div className="relative w-full h-72 overflow-hidden mb-4 rounded-t-sm">
-                      <Image 
-                        src={post.imagem} 
-                        alt={post.titulo} 
-                        fill 
+                      <Image
+                        src={post.imagem}
+                        alt={post.titulo}
+                        fill
                         className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000"
-                        unoptimized
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent"></div>
                     </div>

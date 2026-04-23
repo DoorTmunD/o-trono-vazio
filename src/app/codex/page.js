@@ -160,12 +160,11 @@ export default function Codex() {
               `}
               style={{ transitionDelay: `${500 + (index * 150)}ms` }}
             >
-              <Image 
-                src={item.imagem} 
-                alt={item.nome} 
-                fill 
+              <Image
+                src={item.imagem}
+                alt={item.nome}
+                fill
                 className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
               
@@ -189,13 +188,13 @@ export default function Codex() {
       {itemSelecionado && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           {/* Fundo escuro que fecha ao clicar */}
-          <div 
-            className="absolute inset-0 bg-black/90 backdrop-blur-md animate-in fade-in duration-300"
+          <div
+            className="absolute inset-0 bg-black/90 backdrop-blur-md animate-fade-in"
             onClick={() => setItemSelecionado(null)}
           ></div>
-          
+
           {/* O Cartão do Modal */}
-          <div className="relative w-full max-w-4xl max-h-[90vh] bg-neutral-950 border border-neutral-800 flex flex-col md:flex-row overflow-hidden shadow-[0_0_50px_rgba(0,0,0,1)] animate-in zoom-in-95 duration-300">
+          <div className="relative w-full max-w-4xl max-h-[90vh] bg-neutral-950 border border-neutral-800 flex flex-col md:flex-row overflow-hidden shadow-[0_0_50px_rgba(0,0,0,1)] animate-zoom-in-95">
             
             {/* Botão Fechar */}
             <button 
@@ -207,18 +206,17 @@ export default function Codex() {
 
             {/* Imagem Completa (Esquerda) */}
             <div className="relative w-full md:w-2/5 h-64 md:h-auto">
-              <Image 
-                src={itemSelecionado.imagem} 
-                alt={itemSelecionado.nome} 
-                fill 
+              <Image
+                src={itemSelecionado.imagem}
+                alt={itemSelecionado.nome}
+                fill
                 className="object-cover"
-                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950 via-transparent to-transparent"></div>
             </div>
 
             {/* Informações (Direita) */}
-            <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto custom-scrollbar">
+            <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto scrollbar-hide">
               <span className="text-amber-600 font-bold tracking-widest text-xs uppercase mb-2 block">
                 {itemSelecionado.titulo}
               </span>
