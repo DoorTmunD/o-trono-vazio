@@ -34,7 +34,7 @@ export default function SantuarioHome() {
           <h2 className={`${cinzel.className} text-xl tracking-widest text-neutral-100`}>O TRONO VAZIO</h2>
           
           <div className="hidden md:flex gap-8 text-xs tracking-widest text-neutral-400 font-medium uppercase">
-            <a href="#" className="hover:text-red-500 transition-colors">A Obra</a>
+            <a href="/santuario" className="text-red-600 transition-colors">A Obra</a>
             <a href="/codex" className="hover:text-red-500 transition-colors">O Códex</a>
             <a href="/bastidores" className="hover:text-red-500 transition-colors">Bastidores</a>
           </div>
@@ -106,7 +106,7 @@ export default function SantuarioHome() {
             Os Peões no Tabuleiro
           </h3>
           
-          <div className="flex gap-6 overflow-x-auto pb-6 pt-2">
+          <div className="flex gap-6 overflow-x-auto pb-6 pt-2 scrollbar-hide">
             {personagens.map((personagem, index) => (
               <div key={index} className="min-w-64 h-96 relative group cursor-pointer border border-neutral-800 rounded-md overflow-hidden bg-neutral-900 flex items-end p-6 hover:-translate-y-2 hover:border-red-900 transition-all duration-300">
                 
