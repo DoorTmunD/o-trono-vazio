@@ -2,23 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Cinzel, Montserrat } from 'next/font/google';
+import Nav from '@/components/Nav';
+import Footer from '@/components/Footer';
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
+const cinzel     = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500', '700'] });
 
 export default function Codex() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [filtroAtivo, setFiltroAtivo] = useState('Personagens');
   const [itemSelecionado, setItemSelecionado] = useState(null);
-  const [menuAberto, setMenuAberto] = useState(false);
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
+  useEffect(() => { setIsLoaded(true); }, []);
 
-  // Fecha modal com tecla Escape
+  // Fecha modal com Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setItemSelecionado(null);
@@ -33,128 +31,76 @@ export default function Codex() {
 
   const personagens = [
     {
-      tipo: 'Personagem',
-      id: 'sereth',
-      nome: 'Sereth',
-      titulo: 'O Enigma',
+      tipo: 'Personagem', id: 'sereth',
+      nome: 'Sereth', titulo: 'O Enigma',
       imagem: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop',
-      idade: 'Desconhecida',
-      altura: '2,03m',
+      idade: 'Desconhecida', altura: '2,03m',
       gostos: 'Silêncio, xadrez, leitura',
       desgostos: 'Perguntas indiscretas, multidões',
-      historia: 'Pouco se sabe sobre o passado de Sereth antes de sua chegada. Ele carrega consigo segredos antigos e um olhar que parece ler a alma daqueles que ousam encará-lo por muito tempo.'
+      historia: 'Pouco se sabe sobre o passado de Sereth antes de sua chegada. Ele carrega consigo segredos antigos e um olhar que parece ler a alma daqueles que ousam encará-lo por muito tempo.',
     },
     {
-      tipo: 'Personagem',
-      id: 'hana',
-      nome: 'Ha-Neul (Hana)',
-      titulo: 'A Lâmina',
+      tipo: 'Personagem', id: 'hana',
+      nome: 'Ha-Neul (Hana)', titulo: 'A Lâmina',
       imagem: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
-      idade: '24',
-      altura: '1.65m',
+      idade: '24', altura: '1.65m',
       gostos: 'café, musica, tatuagem, filmes de terror',
       desgostos: 'Hesitação, traição',
-      historia: 'Forjada nas sombras de um passado que ela tenta esquecer, Hana é a precisão em forma humana. Cada movimento seu é calculado, cada palavra é letal. Ela encontrou no grupo uma utilidade para suas habilidades, mas a lealdade verdadeira ainda é algo que ela guarda a sete chaves.'
+      historia: 'Forjada nas sombras de um passado que ela tenta esquecer, Hana é a precisão em forma humana. Cada movimento seu é calculado, cada palavra é letal. Ela encontrou no grupo uma utilidade para suas habilidades, mas a lealdade verdadeira ainda é algo que ela guarda a sete chaves.',
     },
     {
-      tipo: 'Personagem',
-      id: 'maria',
-      nome: 'Maria B',
-      titulo: 'A Devota',
+      tipo: 'Personagem', id: 'maria',
+      nome: 'Maria B', titulo: 'A Devota',
       imagem: 'https://images.unsplash.com/photo-1519068737630-e5db30e12e42?q=80&w=800&auto=format&fit=crop',
-      idade: '27',
-      altura: '1.69m',
+      idade: '27', altura: '1.69m',
       gostos: 'leitura, terror, adrenalina, liberdade',
       desgostos: 'Solidão, esquecimento, confinamento',
-      historia: 'Sua linhagem remonta aos mais antigos reis ingleses, um passado não muito colorido marca sua história, sua vida salva e guiada pelo Anjo Prateado, tem tudo para ir no rumo que ela sempre quis.'
+      historia: 'Sua linhagem remonta aos mais antigos reis ingleses, um passado não muito colorido marca sua história, sua vida salva e guiada pelo Anjo Prateado, tem tudo para ir no rumo que ela sempre quis.',
     },
     {
-      tipo: 'Personagem',
-      id: 'lea',
-      nome: 'Leanor (Lea)',
-      titulo: 'A Sombra',
+      tipo: 'Personagem', id: 'lea',
+      nome: 'Leanor (Lea)', titulo: 'A Sombra',
       imagem: 'https://images.unsplash.com/photo-1705405740030-2d78f67b4b9a?q=80&w=800&auto=format&fit=crop',
-      idade: '157',
-      altura: '1.75m',
+      idade: '157', altura: '1.75m',
       gostos: 'Mar, Atletismo, Pessoas Inteligentes, Deus',
       desgostos: 'Prisão, correntes, ser posta à mostra (modelo)',
-      historia: 'Leanor busca somente uma coisa, paz. A paz que ela nunca teve na vida, o trabalho de caçadora foi um meio que ela encontrou de tentar uma redenção pelo que é, e um dia enfim poder obter a paz que tanto almeja.'
+      historia: 'Leanor busca somente uma coisa, paz. A paz que ela nunca teve na vida, o trabalho de caçadora foi um meio que ela encontrou de tentar uma redenção pelo que é, e um dia enfim poder obter a paz que tanto almeja.',
     },
     {
-      tipo: 'Personagem',
-      id: 'tom',
-      nome: 'Thomas (Tom)',
-      titulo: 'O Escudo',
+      tipo: 'Personagem', id: 'tom',
+      nome: 'Thomas (Tom)', titulo: 'O Escudo',
       imagem: 'https://images.unsplash.com/photo-1738697216532-aae28e6dffaa?q=80&w=800&auto=format&fit=crop',
-      idade: '157',
-      altura: '1.89m',
+      idade: '157', altura: '1.89m',
       gostos: 'Cerveja, animais, esportes, dinheiro',
       desgostos: 'Maldade, violência, guerra',
-      historia: 'Tom já foi ambicioso, já quis ter sucesso, mas hoje a felicidade da irmã basta para ele, o trauma de guerras vividas mudou sua forma de enxergar o mundo.'
-    }
+      historia: 'Tom já foi ambicioso, já quis ter sucesso, mas hoje a felicidade da irmã basta para ele, o trauma de guerras vividas mudou sua forma de enxergar o mundo.',
+    },
   ];
 
   const lores = [
     {
-      tipo: 'Lore',
-      id: 'a-queda',
-      nome: 'A Noite das Cinzas',
-      titulo: 'Evento Histórico',
+      tipo: 'Lore', id: 'a-queda',
+      nome: 'A Noite das Cinzas', titulo: 'Evento Histórico',
       imagem: 'https://images.unsplash.com/photo-1473654729513-2070f7f3296c?q=80&w=800&auto=format&fit=crop',
-      historia: 'Antes de O Trono Vazio, houve a Noite das Cinzas. Foi quando as velhas alianças foram queimadas e a escuridão reivindicou seu espaço. Este evento moldou as regras do tabuleiro em que nossos heróis (e vilões) jogam hoje.'
-    }
+      historia: 'Antes de O Trono Vazio, houve a Noite das Cinzas. Foi quando as velhas alianças foram queimadas e a escuridão reivindicou seu espaço. Este evento moldou as regras do tabuleiro em que nossos heróis (e vilões) jogam hoje.',
+    },
   ];
 
   const conteudoAtual = filtroAtivo === 'Personagens' ? personagens : filtroAtivo === 'Lore' ? lores : [];
 
   return (
-    <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ease-in-out pb-32
+    <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ease-in-out pb-0
       ${isLoaded ? 'opacity-100' : 'opacity-0'}
     `}>
+      <Nav />
 
-      {/* 1. MENU SUPERIOR */}
-      <nav className={`fixed top-0 w-full z-40 bg-black/90 backdrop-blur-md border-b border-neutral-800 transition-transform duration-1000 delay-300 ${isLoaded ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
-          <Link href="/santuario" className={`${cinzel.className} text-xl tracking-widest text-neutral-100 hover:text-amber-600 transition-colors`}>
-            O TRONO VAZIO
-          </Link>
-
-          {/* Links — desktop */}
-          <div className="hidden md:flex gap-8 text-xs tracking-widest text-neutral-400 font-medium uppercase">
-            <Link href="/santuario" className="hover:text-red-500 transition-colors">A Obra</Link>
-            <Link href="/codex" className="text-red-600">O Códex</Link>
-            <Link href="/bastidores" className="hover:text-red-500 transition-colors">Bastidores</Link>
-          </div>
-
-          {/* Hambúrguer — mobile */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
-            onClick={() => setMenuAberto(!menuAberto)}
-            aria-label="Abrir menu"
-          >
-            <span className={`block w-6 h-px bg-neutral-400 transition-all duration-300 origin-center ${menuAberto ? 'rotate-45 translate-y-[7px]' : ''}`}></span>
-            <span className={`block w-6 h-px bg-neutral-400 transition-all duration-300 ${menuAberto ? 'opacity-0 scale-x-0' : ''}`}></span>
-            <span className={`block w-6 h-px bg-neutral-400 transition-all duration-300 origin-center ${menuAberto ? '-rotate-45 -translate-y-[7px]' : ''}`}></span>
-          </button>
-        </div>
-
-        {/* Menu mobile — dropdown animado */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuAberto ? 'max-h-48' : 'max-h-0'}`}>
-          <div className="flex flex-col items-center gap-6 py-6 text-xs tracking-widest font-medium uppercase border-t border-neutral-800/50">
-            <Link href="/santuario" className="text-neutral-400 hover:text-red-500 transition-colors" onClick={() => setMenuAberto(false)}>A Obra</Link>
-            <Link href="/codex" className="text-red-600" onClick={() => setMenuAberto(false)}>O Códex</Link>
-            <Link href="/bastidores" className="text-neutral-400 hover:text-red-500 transition-colors" onClick={() => setMenuAberto(false)}>Bastidores</Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* 2. CABEÇALHO & FILTROS */}
+      {/* CABEÇALHO & FILTROS */}
       <section className="relative w-full pt-40 pb-16 flex flex-col items-center justify-center">
         <div className={`relative z-20 text-center space-y-6 px-6 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <span className="text-amber-600 font-bold tracking-widest text-xs uppercase flex items-center justify-center gap-3">
-            <div className="h-px w-8 bg-amber-700"></div>
+            <div className="h-px w-8 bg-amber-700" />
             Enciclopédia
-            <div className="h-px w-8 bg-amber-700"></div>
+            <div className="h-px w-8 bg-amber-700" />
           </span>
 
           <h1 className={`${cinzel.className} text-5xl md:text-7xl text-white tracking-widest drop-shadow-lg`}>
@@ -180,10 +126,9 @@ export default function Codex() {
         </div>
       </section>
 
-      {/* 3. GALERIA */}
-      <section className="relative max-w-6xl mx-auto px-6">
+      {/* GALERIA */}
+      <section className="relative max-w-6xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
           {conteudoAtual.map((item, index) => (
             <div
               key={item.id}
@@ -191,7 +136,7 @@ export default function Codex() {
               className={`group relative h-96 cursor-pointer overflow-hidden border border-neutral-800 rounded-sm bg-neutral-900 transition-all duration-700 hover:-translate-y-2 hover:border-amber-600/50 hover:shadow-[0_15px_30px_rgba(0,0,0,0.8)]
                 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'}
               `}
-              style={{ transitionDelay: `${500 + (index * 150)}ms` }}
+              style={{ transitionDelay: `${500 + index * 150}ms` }}
             >
               <Image
                 src={item.imagem}
@@ -199,8 +144,7 @@ export default function Codex() {
                 fill
                 className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
               <div className="absolute bottom-0 w-full p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 <span className="text-amber-500 text-xs font-bold tracking-widest uppercase block mb-1">{item.titulo}</span>
                 <h3 className={`${cinzel.className} text-2xl text-white`}>{item.nome}</h3>
@@ -213,23 +157,18 @@ export default function Codex() {
               Registros não encontrados.
             </div>
           )}
-
         </div>
       </section>
 
-      {/* 4. MODAL DE DETALHES */}
+      {/* MODAL DE DETALHES */}
       {itemSelecionado && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          {/* Fundo — fecha ao clicar ou pressionar Escape */}
           <div
             className="absolute inset-0 bg-black/90 backdrop-blur-md animate-fade-in"
             onClick={() => setItemSelecionado(null)}
-          ></div>
-
-          {/* Cartão do Modal */}
+          />
           <div className="relative w-full max-w-4xl max-h-[90vh] bg-neutral-950 border border-neutral-800 flex flex-col md:flex-row overflow-hidden shadow-[0_0_50px_rgba(0,0,0,1)] animate-zoom-in-95">
 
-            {/* Botão Fechar */}
             <button
               onClick={() => setItemSelecionado(null)}
               className="absolute top-4 right-4 z-20 w-10 h-10 bg-black/50 border border-neutral-700 text-white flex items-center justify-center hover:bg-red-900 hover:border-red-500 transition-colors"
@@ -238,18 +177,11 @@ export default function Codex() {
               ✕
             </button>
 
-            {/* Imagem (Esquerda) */}
             <div className="relative w-full md:w-2/5 h-64 md:h-auto">
-              <Image
-                src={itemSelecionado.imagem}
-                alt={itemSelecionado.nome}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950 via-transparent to-transparent"></div>
+              <Image src={itemSelecionado.imagem} alt={itemSelecionado.nome} fill className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950 via-transparent to-transparent" />
             </div>
 
-            {/* Informações (Direita) */}
             <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto scrollbar-hide">
               <span className="text-amber-600 font-bold tracking-widest text-xs uppercase mb-2 block">
                 {itemSelecionado.titulo}
@@ -258,7 +190,6 @@ export default function Codex() {
                 {itemSelecionado.nome}
               </h2>
 
-              {/* Ficha Técnica — apenas Personagens */}
               {itemSelecionado.tipo === 'Personagem' && (
                 <div className="grid grid-cols-2 gap-6 mb-8 bg-neutral-900/50 p-6 border border-neutral-800/50">
                   <div>
@@ -280,7 +211,6 @@ export default function Codex() {
                 </div>
               )}
 
-              {/* História */}
               <div>
                 <span className="text-neutral-500 text-xs uppercase tracking-widest block mb-4 border-l-2 border-red-800 pl-3">
                   Registros Históricos
@@ -289,12 +219,12 @@ export default function Codex() {
                   {itemSelecionado.historia}
                 </p>
               </div>
-
             </div>
           </div>
         </div>
       )}
 
+      <Footer />
     </main>
   );
 }
