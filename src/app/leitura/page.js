@@ -1,13 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Cinzel, Montserrat, Lora } from 'next/font/google';
+import { cinzel, montserrat, lora } from '@/lib/fonts';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-
-const cinzel   = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500'] });
-const lora     = Lora({ subsets: ['latin'], weight: ['400', '500'], style: ['normal', 'italic'] });
 
 // ============================================================
 // CAPÍTULOS — Adicione o conteúdo do seu livro aqui
@@ -57,6 +53,12 @@ const capitulos = [
   // Adicione mais capítulos aqui seguindo o padrão acima
 ];
 
+const calcularTempo = (texto) => {
+  if (!texto?.length) return null;
+  const palavras = texto.join(' ').split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(palavras / 200));
+};
+
 export default function Leitura() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [capituloAberto, setCapituloAberto] = useState(null);
@@ -71,6 +73,13 @@ export default function Leitura() {
         document.getElementById(`cap-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 150);
     }
+  };
+
+  const abrirCapitulo = (id) => {
+    setCapituloAberto(id);
+    setTimeout(() => {
+      document.getElementById(`cap-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
   };
 
   return (
@@ -96,9 +105,12 @@ export default function Leitura() {
 
       {/* Lista de capítulos */}
       <section className={`max-w-3xl mx-auto px-6 pb-24 space-y-4 transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        {capitulos.map((cap) => {
+        {capitulos.map((cap, index) => {
           const disponivel = cap.status === 'disponivel';
           const aberto     = capituloAberto === cap.id;
+          const capPrev    = index > 0 ? capitulos[index - 1] : null;
+          const capNext    = index < capitulos.length - 1 ? capitulos[index + 1] : null;
+          const tempo      = disponivel ? calcularTempo(cap.texto) : null;
 
           return (
             <div
@@ -126,15 +138,20 @@ export default function Leitura() {
                   </h3>
                 </div>
 
-                {disponivel ? (
-                  <span className={`text-xs font-bold tracking-widest uppercase shrink-0 transition-colors duration-300 ${aberto ? 'text-amber-600' : 'text-red-700'}`}>
-                    {aberto ? '— Fechar' : '+ Ler'}
-                  </span>
-                ) : (
-                  <span className="text-xs text-neutral-700 tracking-widest uppercase font-bold shrink-0">
-                    Em Breve
-                  </span>
-                )}
+                <div className="flex items-center gap-4 shrink-0">
+                  {disponivel && tempo && (
+                    <span className="text-xs text-neutral-600 tracking-widest hidden sm:block">~{tempo} min</span>
+                  )}
+                  {disponivel ? (
+                    <span className={`text-xs font-bold tracking-widest uppercase transition-colors duration-300 ${aberto ? 'text-amber-600' : 'text-red-700'}`}>
+                      {aberto ? '— Fechar' : '+ Ler'}
+                    </span>
+                  ) : (
+                    <span className="text-xs text-neutral-700 tracking-widest uppercase font-bold">
+                      Em Breve
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Texto do capítulo — expande quando aberto */}
@@ -149,6 +166,38 @@ export default function Leitura() {
                     {cap.texto?.map((paragrafo, i) => (
                       <p key={i}>{paragrafo}</p>
                     ))}
+                  </div>
+
+                  {/* Navegação entre capítulos */}
+                  <div className="flex justify-between items-start mt-16 pt-8 border-t border-neutral-800/40 gap-8">
+                    <div>
+                      {capPrev && capPrev.status === 'disponivel' && (
+                        <button onClick={() => abrirCapitulo(capPrev.id)} className="text-left group">
+                          <span className="text-xs text-neutral-600 tracking-widest uppercase block mb-1">← Anterior</span>
+                          <span className={`${cinzel.className} text-sm text-neutral-400 group-hover:text-white transition-colors`}>
+                            {capPrev.titulo}
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {capNext && (
+                        capNext.status === 'disponivel' ? (
+                          <button onClick={() => abrirCapitulo(capNext.id)} className="text-right group">
+                            <span className="text-xs text-neutral-600 tracking-widest uppercase block mb-1">Próximo →</span>
+                            <span className={`${cinzel.className} text-sm text-neutral-400 group-hover:text-white transition-colors`}>
+                              {capNext.titulo}
+                            </span>
+                          </button>
+                        ) : (
+                          <div>
+                            <span className="text-xs text-neutral-700 tracking-widest uppercase block mb-1">Próximo →</span>
+                            <span className={`${cinzel.className} text-sm text-neutral-700 block`}>{capNext.titulo}</span>
+                            <span className="text-xs text-red-900/60 tracking-widest uppercase block mt-1">Em Breve</span>
+                          </div>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
               )}

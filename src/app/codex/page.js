@@ -2,12 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Cinzel, Montserrat } from 'next/font/google';
+import { cinzel, montserrat } from '@/lib/fonts';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-
-const cinzel     = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500', '700'] });
 
 export default function Codex() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,13 +24,13 @@ export default function Codex() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [itemSelecionado]);
 
-  const categorias = ['Personagens', 'Lore', 'Artefatos'];
+  const artefatos = [];
 
   const personagens = [
     {
       tipo: 'Personagem', id: 'sereth',
       nome: 'Sereth', titulo: 'O Enigma',
-      imagem: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop',
+      imagem: '/Sereth.jpg',
       idade: 'Desconhecida', altura: '2,03m',
       gostos: 'Silêncio, xadrez, leitura',
       desgostos: 'Perguntas indiscretas, multidões',
@@ -42,7 +39,7 @@ export default function Codex() {
     {
       tipo: 'Personagem', id: 'hana',
       nome: 'Ha-Neul (Hana)', titulo: 'A Lâmina',
-      imagem: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
+      imagem: '/Hana.jpg',
       idade: '24', altura: '1.65m',
       gostos: 'café, musica, tatuagem, filmes de terror',
       desgostos: 'Hesitação, traição',
@@ -60,7 +57,7 @@ export default function Codex() {
     {
       tipo: 'Personagem', id: 'lea',
       nome: 'Leanor (Lea)', titulo: 'A Sombra',
-      imagem: 'https://images.unsplash.com/photo-1705405740030-2d78f67b4b9a?q=80&w=800&auto=format&fit=crop',
+      imagem: '/Lea.JPG',
       idade: '157', altura: '1.75m',
       gostos: 'Mar, Atletismo, Pessoas Inteligentes, Deus',
       desgostos: 'Prisão, correntes, ser posta à mostra (modelo)',
@@ -69,7 +66,7 @@ export default function Codex() {
     {
       tipo: 'Personagem', id: 'tom',
       nome: 'Thomas (Tom)', titulo: 'O Escudo',
-      imagem: 'https://images.unsplash.com/photo-1738697216532-aae28e6dffaa?q=80&w=800&auto=format&fit=crop',
+      imagem: '/Tom.JPG',
       idade: '157', altura: '1.89m',
       gostos: 'Cerveja, animais, esportes, dinheiro',
       desgostos: 'Maldade, violência, guerra',
@@ -86,7 +83,13 @@ export default function Codex() {
     },
   ];
 
-  const conteudoAtual = filtroAtivo === 'Personagens' ? personagens : filtroAtivo === 'Lore' ? lores : [];
+  const todasCategorias = [
+    { label: 'Personagens', itens: personagens },
+    { label: 'Lore', itens: lores },
+    { label: 'Artefatos', itens: artefatos },
+  ];
+  const categorias = todasCategorias.filter(c => c.itens.length > 0);
+  const conteudoAtual = todasCategorias.find(c => c.label === filtroAtivo)?.itens ?? [];
 
   return (
     <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ease-in-out pb-0
@@ -108,18 +111,18 @@ export default function Codex() {
           </h1>
 
           <div className="flex flex-wrap justify-center gap-4 pt-6">
-            {categorias.map((categoria) => (
+            {categorias.map(({ label }) => (
               <button
-                key={categoria}
-                onClick={() => setFiltroAtivo(categoria)}
+                key={label}
+                onClick={() => setFiltroAtivo(label)}
                 className={`px-8 py-3 border rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300
-                  ${filtroAtivo === categoria
+                  ${filtroAtivo === label
                     ? 'border-red-700 bg-red-900/20 text-white shadow-[0_0_15px_rgba(153,27,27,0.4)]'
                     : 'border-neutral-800 bg-transparent text-neutral-500 hover:border-neutral-500 hover:text-neutral-300'
                   }
                 `}
               >
-                {categoria}
+                {label}
               </button>
             ))}
           </div>

@@ -1,9 +1,6 @@
-import { Cinzel, Montserrat } from 'next/font/google';
+import { cinzel, montserrat } from '@/lib/fonts';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-
-const cinzel     = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
 export const metadata = { title: 'Contato' };
 
@@ -75,7 +72,7 @@ export default function Contato() {
       </section>
 
       {/* Grid de redes */}
-      <section className="max-w-4xl mx-auto px-6 pb-24">
+      <section className="max-w-6xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {contatos.map((contato) => (
             <a

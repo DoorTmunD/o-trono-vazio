@@ -1,9 +1,6 @@
 import Link from 'next/link';
-import { Cinzel, Montserrat } from 'next/font/google';
+import { cinzel, montserrat } from '@/lib/fonts';
 import Nav from '@/components/Nav';
-
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400'] });
 
 export const metadata = { title: 'Página não encontrada' };
 

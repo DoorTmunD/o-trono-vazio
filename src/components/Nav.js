@@ -3,9 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Cinzel } from 'next/font/google';
-
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
+import { cinzel } from '@/lib/fonts';
 
 const links = [
   { href: '/santuario', label: 'A Obra' },

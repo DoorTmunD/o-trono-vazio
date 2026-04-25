@@ -2,12 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Cinzel, Montserrat } from 'next/font/google';
+import { cinzel, montserrat } from '@/lib/fonts';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-
-const cinzel     = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500', '700'] });
 
 export default function Bastidores() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -82,7 +79,7 @@ export default function Bastidores() {
       </section>
 
       {/* LINHA DO TEMPO */}
-      <section className="relative max-w-5xl mx-auto px-6 mt-10 pb-24">
+      <section className="relative max-w-6xl mx-auto px-6 mt-10 pb-24">
         <div className={`absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-red-900/80 via-neutral-800 to-transparent -translate-x-1/2 z-0 origin-top transition-transform duration-[2000ms] delay-700 ${isLoaded ? 'scale-y-100' : 'scale-y-0'}`} />
 
         <div className="space-y-32 relative z-10">

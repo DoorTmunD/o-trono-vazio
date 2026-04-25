@@ -2,10 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Cinzel, Montserrat } from 'next/font/google';
-
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400'] });
+import { cinzel, montserrat } from '@/lib/fonts';
 
 // ============================================================
 // REDES SOCIAIS
@@ -45,27 +42,28 @@ const navLinks = [
 
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const [enviado, setEnviado] = useState(false);
+  const [estado, setEstado] = useState('idle'); // 'idle' | 'loading' | 'ok' | 'erro'
 
-  const handleNewsletter = (e) => {
+  const handleNewsletter = async (e) => {
     e.preventDefault();
-    if (!email) return;
-
-    // ============================================================
-    // NEWSLETTER — Integração com serviço de e-mail
-    //
-    // Opções gratuitas recomendadas:
-    //   • Mailchimp  → mailchimp.com
-    //   • Brevo      → brevo.com
-    //   • ConvertKit → convertkit.com
-    //
-    // Substitua o console.log abaixo pela chamada à API do
-    // serviço escolhido (geralmente um fetch POST com o email).
-    // ============================================================
-    console.log('Email para newsletter:', email);
-
-    setEnviado(true);
-    setEmail('');
+    if (!email || estado === 'loading') return;
+    setEstado('loading');
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setEstado('ok');
+        setEmail('');
+      } else {
+        setEstado('erro');
+      }
+    } catch {
+      setEstado('erro');
+    }
   };
 
   return (
@@ -108,28 +106,35 @@ export default function Footer() {
             Receba novidades sobre o livro antes de todo mundo.
           </p>
 
-          {enviado ? (
+          {estado === 'ok' ? (
             <div className="flex items-center gap-2 text-amber-600 text-sm">
               <span>✦</span>
               <span>Bem-vindo às sombras. Em breve terá notícias.</span>
             </div>
           ) : (
-            <form onSubmit={handleNewsletter} className="flex flex-col gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
-                required
-                className="bg-neutral-900 border border-neutral-800 text-neutral-200 text-sm px-4 py-3 placeholder-neutral-600 focus:outline-none focus:border-amber-700 transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-red-950 hover:bg-red-900 text-white text-xs font-bold tracking-widest uppercase border border-red-900 hover:border-red-700 transition-all"
-              >
-                Quero Saber Primeiro
-              </button>
-            </form>
+            <>
+              <form onSubmit={handleNewsletter} className="flex flex-col gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="seu@email.com"
+                  required
+                  disabled={estado === 'loading'}
+                  className="bg-neutral-900 border border-neutral-800 text-neutral-200 text-sm px-4 py-3 placeholder-neutral-600 focus:outline-none focus:border-amber-700 transition-colors disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={estado === 'loading'}
+                  className="px-6 py-3 bg-red-950 hover:bg-red-900 text-white text-xs font-bold tracking-widest uppercase border border-red-900 hover:border-red-700 transition-all disabled:opacity-50"
+                >
+                  {estado === 'loading' ? 'Aguarde...' : 'Quero Saber Primeiro'}
+                </button>
+              </form>
+              {estado === 'erro' && (
+                <p className="text-red-700 text-xs tracking-wider">Erro ao cadastrar. Tente novamente.</p>
+              )}
+            </>
           )}
         </div>
       </div>

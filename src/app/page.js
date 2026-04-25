@@ -3,10 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Cinzel, Montserrat } from 'next/font/google';
-
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '500'] });
+import { cinzel, montserrat } from '@/lib/fonts';
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -14,10 +11,15 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+    if (sessionStorage.getItem('otv_visitou')) {
+      router.replace('/santuario');
+      return;
+    }
     setIsLoaded(true);
   }, []);
 
   const handleEnter = () => {
+    sessionStorage.setItem('otv_visitou', '1');
     setIsEntering(true);
     setTimeout(() => {
       router.push('/santuario');
@@ -79,7 +81,7 @@ export default function Home() {
             
             hover:border-red-600 hover:bg-black hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] hover:duration-500
             
-            ${!isLoaded ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0 delay-[6500ms] pointer-events-auto'}
+            ${!isLoaded ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0 delay-[2000ms] pointer-events-auto'}
           `}
         >
           {/* Fogo subindo (Visível apenas no hover) */}
