@@ -4,14 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cinzel } from '@/lib/fonts';
-
-const links = [
-  { href: '/santuario', label: 'A Obra' },
-  { href: '/leitura',   label: 'Leitura' },
-  { href: '/codex',     label: 'O Códex' },
-  { href: '/bastidores',label: 'Bastidores' },
-  { href: '/contato',   label: 'Contato' },
-];
+import { navLinks } from '@/lib/nav-links';
 
 export default function Nav() {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -35,7 +28,7 @@ export default function Nav() {
 
         {/* Links — desktop */}
         <div className="hidden md:flex gap-8 text-xs tracking-widest font-medium uppercase">
-          {links.map(link => (
+          {navLinks.map(link => (
             <Link
               key={link.href}
               href={link.href}
@@ -60,10 +53,19 @@ export default function Nav() {
         </button>
       </div>
 
+      {/* Backdrop mobile */}
+      {menuAberto && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setMenuAberto(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Dropdown mobile */}
-      <div className={`md:hidden overflow-hidden transition-all duration-300 ${menuAberto ? 'max-h-72' : 'max-h-0'}`}>
+      <div className={`md:hidden overflow-hidden transition-all duration-300 relative z-50 ${menuAberto ? 'max-h-72' : 'max-h-0'}`}>
         <div className="flex flex-col items-center gap-6 py-6 text-xs tracking-widest font-medium uppercase border-t border-neutral-800/50">
-          {links.map(link => (
+          {navLinks.map(link => (
             <Link
               key={link.href}
               href={link.href}

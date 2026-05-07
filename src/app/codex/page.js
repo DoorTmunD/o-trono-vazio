@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { cinzel, montserrat } from '@/lib/fonts';
+import { personagens } from '@/lib/personagens';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 
@@ -26,54 +27,6 @@ export default function Codex() {
 
   const artefatos = [];
 
-  const personagens = [
-    {
-      tipo: 'Personagem', id: 'sereth',
-      nome: 'Sereth', titulo: 'O Enigma',
-      imagem: '/Sereth.jpg',
-      idade: 'Desconhecida', altura: '2,03m',
-      gostos: 'Silêncio, xadrez, leitura',
-      desgostos: 'Perguntas indiscretas, multidões',
-      historia: 'Pouco se sabe sobre o passado de Sereth antes de sua chegada. Ele carrega consigo segredos antigos e um olhar que parece ler a alma daqueles que ousam encará-lo por muito tempo.',
-    },
-    {
-      tipo: 'Personagem', id: 'hana',
-      nome: 'Ha-Neul (Hana)', titulo: 'A Lâmina',
-      imagem: '/Hana.jpg',
-      idade: '24', altura: '1.65m',
-      gostos: 'café, musica, tatuagem, filmes de terror',
-      desgostos: 'Hesitação, traição',
-      historia: 'Forjada nas sombras de um passado que ela tenta esquecer, Hana é a precisão em forma humana. Cada movimento seu é calculado, cada palavra é letal. Ela encontrou no grupo uma utilidade para suas habilidades, mas a lealdade verdadeira ainda é algo que ela guarda a sete chaves.',
-    },
-    {
-      tipo: 'Personagem', id: 'maria',
-      nome: 'Maria B', titulo: 'A Devota',
-      imagem: 'https://images.unsplash.com/photo-1519068737630-e5db30e12e42?q=80&w=800&auto=format&fit=crop',
-      idade: '27', altura: '1.69m',
-      gostos: 'leitura, terror, adrenalina, liberdade',
-      desgostos: 'Solidão, esquecimento, confinamento',
-      historia: 'Sua linhagem remonta aos mais antigos reis ingleses, um passado não muito colorido marca sua história, sua vida salva e guiada pelo Anjo Prateado, tem tudo para ir no rumo que ela sempre quis.',
-    },
-    {
-      tipo: 'Personagem', id: 'lea',
-      nome: 'Leanor (Lea)', titulo: 'A Sombra',
-      imagem: '/Lea.JPG',
-      idade: '157', altura: '1.75m',
-      gostos: 'Mar, Atletismo, Pessoas Inteligentes, Deus',
-      desgostos: 'Prisão, correntes, ser posta à mostra (modelo)',
-      historia: 'Leanor busca somente uma coisa, paz. A paz que ela nunca teve na vida, o trabalho de caçadora foi um meio que ela encontrou de tentar uma redenção pelo que é, e um dia enfim poder obter a paz que tanto almeja.',
-    },
-    {
-      tipo: 'Personagem', id: 'tom',
-      nome: 'Thomas (Tom)', titulo: 'O Escudo',
-      imagem: '/Tom.JPG',
-      idade: '157', altura: '1.89m',
-      gostos: 'Cerveja, animais, esportes, dinheiro',
-      desgostos: 'Maldade, violência, guerra',
-      historia: 'Tom já foi ambicioso, já quis ter sucesso, mas hoje a felicidade da irmã basta para ele, o trauma de guerras vividas mudou sua forma de enxergar o mundo.',
-    },
-  ];
-
   const lores = [
     {
       tipo: 'Lore', id: 'a-queda',
@@ -88,7 +41,6 @@ export default function Codex() {
     { label: 'Lore', itens: lores },
     { label: 'Artefatos', itens: artefatos },
   ];
-  const categorias = todasCategorias.filter(c => c.itens.length > 0);
   const conteudoAtual = todasCategorias.find(c => c.label === filtroAtivo)?.itens ?? [];
 
   return (
@@ -111,20 +63,27 @@ export default function Codex() {
           </h1>
 
           <div className="flex flex-wrap justify-center gap-4 pt-6">
-            {categorias.map(({ label }) => (
-              <button
-                key={label}
-                onClick={() => setFiltroAtivo(label)}
-                className={`px-8 py-3 border rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300
-                  ${filtroAtivo === label
-                    ? 'border-red-700 bg-red-900/20 text-white shadow-[0_0_15px_rgba(153,27,27,0.4)]'
-                    : 'border-neutral-800 bg-transparent text-neutral-500 hover:border-neutral-500 hover:text-neutral-300'
-                  }
-                `}
-              >
-                {label}
-              </button>
-            ))}
+            {todasCategorias.map(({ label, itens }) => {
+              const vazia = itens.length === 0;
+              return (
+                <button
+                  key={label}
+                  onClick={() => !vazia && setFiltroAtivo(label)}
+                  disabled={vazia}
+                  className={`px-8 py-3 border rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300
+                    ${vazia
+                      ? 'border-neutral-900 text-neutral-700 cursor-not-allowed'
+                      : filtroAtivo === label
+                        ? 'border-red-700 bg-red-900/20 text-white shadow-[0_0_15px_rgba(153,27,27,0.4)]'
+                        : 'border-neutral-800 bg-transparent text-neutral-500 hover:border-neutral-500 hover:text-neutral-300'
+                    }
+                  `}
+                >
+                  {label}
+                  {vazia && <span className="ml-1.5 font-normal normal-case tracking-normal text-neutral-700">· em breve</span>}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -141,12 +100,20 @@ export default function Codex() {
               `}
               style={{ transitionDelay: `${500 + index * 150}ms` }}
             >
-              <Image
-                src={item.imagem}
-                alt={item.nome}
-                fill
-                className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
-              />
+              {item.imagem ? (
+                <Image
+                  src={item.imagem}
+                  alt={item.nome}
+                  fill
+                  className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-b from-neutral-800/10 via-neutral-900 to-black">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-28 h-48 bg-gradient-to-b from-neutral-600/10 via-neutral-700/5 to-transparent rounded-[40%] blur-3xl" />
+                  </div>
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
               <div className="absolute bottom-0 w-full p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 <span className="text-amber-500 text-xs font-bold tracking-widest uppercase block mb-1">{item.titulo}</span>
@@ -181,8 +148,19 @@ export default function Codex() {
             </button>
 
             <div className="relative w-full md:w-2/5 h-64 md:h-auto">
-              <Image src={itemSelecionado.imagem} alt={itemSelecionado.nome} fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950 via-transparent to-transparent" />
+              {itemSelecionado.imagem ? (
+                <>
+                  <Image src={itemSelecionado.imagem} alt={itemSelecionado.nome} fill className="object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-neutral-950 via-transparent to-transparent" />
+                </>
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-b from-neutral-800/10 via-neutral-900 to-neutral-950 flex items-center justify-center">
+                  <div className="relative flex flex-col items-center gap-4">
+                    <div className="w-32 h-56 bg-gradient-to-b from-neutral-600/15 via-neutral-700/8 to-transparent rounded-[40%] blur-3xl" />
+                    <span className="absolute bottom-0 text-neutral-700 text-xs tracking-widest uppercase">Na sombra</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto scrollbar-hide">

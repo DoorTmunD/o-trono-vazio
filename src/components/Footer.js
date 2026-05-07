@@ -3,42 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { cinzel, montserrat } from '@/lib/fonts';
-
-// ============================================================
-// REDES SOCIAIS
-// Substitua os valores de "href" e "usuario" pelos seus reais.
-// Para adicionar mais redes, copie um bloco { } e cole abaixo.
-// ============================================================
-const redesSociais = [
-  {
-    nome: 'Instagram',
-    usuario: '@seu_usuario',
-    href: 'https://instagram.com/seu_usuario',
-  },
-  {
-    nome: 'TikTok',
-    usuario: '@seu_usuario',
-    href: 'https://tiktok.com/@seu_usuario',
-  },
-  {
-    nome: 'Twitter / X',
-    usuario: '@seu_usuario',
-    href: 'https://x.com/seu_usuario',
-  },
-  {
-    nome: 'Goodreads',
-    usuario: 'Danilo Simões',
-    href: 'https://goodreads.com/user/show/seu_id',
-  },
-];
-
-const navLinks = [
-  { href: '/santuario',  label: 'A Obra' },
-  { href: '/leitura',    label: 'Leitura' },
-  { href: '/codex',      label: 'O Códex' },
-  { href: '/bastidores', label: 'Bastidores' },
-  { href: '/contato',    label: 'Contato' },
-];
+import { navLinks } from '@/lib/nav-links';
+import { redesSociais } from '@/lib/redes-sociais';
 
 export default function Footer() {
   const [email, setEmail] = useState('');

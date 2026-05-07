@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { cinzel, montserrat } from '@/lib/fonts';
+import { personagens } from '@/lib/personagens';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 
@@ -11,8 +12,22 @@ export default function SantuarioHome() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [emailAviso, setEmailAviso] = useState('');
   const [estadoAviso, setEstadoAviso] = useState('idle'); // 'idle' | 'loading' | 'ok' | 'erro'
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const carouselRef = useRef(null);
 
   useEffect(() => { setIsLoaded(true); }, []);
+
+  const checkScroll = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+  };
+
+  const scrollCarousel = (dir) => {
+    carouselRef.current?.scrollBy({ left: dir * 290, behavior: 'smooth' });
+  };
 
   const handleAviso = async (e) => {
     e.preventDefault();
@@ -35,14 +50,6 @@ export default function SantuarioHome() {
       setEstadoAviso('erro');
     }
   };
-
-  const personagens = [
-    { nome: 'Sereth',         titulo: 'O Enigma',    desc: 'A bengala dita o ritmo de passos que escondem segredos profundos.', imagem: '/Sereth.jpg' },
-    { nome: 'Ha-Neul (Hana)', titulo: 'A Lâmina',    desc: 'A precisão forjada nas sombras de um passado distante.',           imagem: '/Hana.jpg'   },
-    { nome: 'Maria',          titulo: 'A Devota',    desc: 'A fé inabalável guiando o grupo pela escuridão.',                  imagem: null          },
-    { nome: 'Thomas (Tom)',   titulo: 'O Protetor',  desc: 'A mente que calcula cada movimento no tabuleiro.',                 imagem: '/Tom.JPG'    },
-    { nome: 'Leanor (Lea)',   titulo: 'A Sombra',    desc: 'Os passos silenciosos que ninguém vê chegar.',                    imagem: '/Lea.JPG'    },
-  ];
 
   return (
     <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ease-in-out
@@ -88,10 +95,11 @@ export default function SantuarioHome() {
             <div className="flex flex-wrap gap-6 pt-6">
               <Link
                 href="/leitura"
-                className="flex items-center gap-3 px-8 py-4 bg-red-900 hover:bg-red-800 text-white border border-red-700 rounded-sm font-bold tracking-widest text-sm uppercase transition-all shadow-lg"
+                className="group relative flex items-center gap-3 px-8 py-4 bg-red-900 hover:bg-red-800 text-white border border-red-700 rounded-sm font-bold tracking-widest text-sm uppercase transition-all shadow-lg overflow-hidden"
               >
-                <span className="text-amber-500">✦</span>
-                Ler Agora
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+                <span className="relative text-amber-500">✦</span>
+                <span className="relative">Ler Agora</span>
               </Link>
 
               <Link
@@ -115,35 +123,61 @@ export default function SantuarioHome() {
           </h3>
 
           <div className="relative">
-          <div className="flex gap-6 overflow-x-auto pb-6 pt-2 scrollbar-hide">
-            {personagens.map((personagem, index) => (
-              <div
-                key={index}
-                className="min-w-64 h-96 relative group cursor-pointer border border-neutral-800 rounded-md overflow-hidden bg-neutral-900 flex items-end p-6 hover:-translate-y-2 hover:border-red-900 transition-all duration-300"
-              >
-                {personagem.imagem && (
-                  <Image
-                    src={personagem.imagem}
-                    alt={personagem.nome}
-                    fill
-                    className="object-cover object-top opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
-                  />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20 z-10 group-hover:from-red-950/80 transition-colors duration-300" />
+            {/* Seta esquerda */}
+            <button
+              onClick={() => scrollCarousel(-1)}
+              aria-label="Anterior"
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/80 border border-neutral-700 text-white flex items-center justify-center text-xl hover:bg-red-900/80 hover:border-red-700 transition-all duration-300
+                ${canScrollLeft ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+              `}
+            >
+              ‹
+            </button>
 
-                <div className="relative z-20 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-xs text-amber-600 uppercase tracking-widest mb-1">{personagem.titulo}</p>
-                  <p className="text-white text-xl font-bold tracking-widest mb-3">{personagem.nome}</p>
+            <div
+              ref={carouselRef}
+              onScroll={checkScroll}
+              className="flex gap-6 overflow-x-auto pb-6 pt-2 scrollbar-hide"
+            >
+              {personagens.map((personagem) => (
+                <div
+                  key={personagem.id}
+                  className="min-w-64 h-96 relative group cursor-pointer border border-neutral-800 rounded-md overflow-hidden bg-neutral-900 flex items-end p-6 hover:-translate-y-2 hover:border-red-900 transition-all duration-300"
+                >
+                  {personagem.imagem && (
+                    <Image
+                      src={personagem.imagem}
+                      alt={personagem.nome}
+                      fill
+                      className="object-cover object-top opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20 z-10 group-hover:from-red-950/80 transition-colors duration-300" />
 
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="h-px w-full bg-red-900/50 mb-3" />
-                    <p className="text-sm text-neutral-400 font-light leading-relaxed">{personagem.desc}</p>
+                  <div className="relative z-20 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-xs text-amber-600 uppercase tracking-widest mb-1">{personagem.titulo}</p>
+                    <p className="text-white text-xl font-bold tracking-widest mb-3">{personagem.nome}</p>
+
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="h-px w-full bg-red-900/50 mb-3" />
+                      <p className="text-sm text-neutral-400 font-light leading-relaxed">{personagem.resumo}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="absolute right-0 top-0 bottom-6 w-20 bg-gradient-to-l from-neutral-950 to-transparent pointer-events-none z-10" />
+              ))}
+            </div>
+
+            {/* Gradiente + seta direita */}
+            <div className="absolute right-0 top-0 bottom-6 w-20 bg-gradient-to-l from-neutral-950 to-transparent pointer-events-none z-10" />
+            <button
+              onClick={() => scrollCarousel(1)}
+              aria-label="Próximo"
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/80 border border-neutral-700 text-white flex items-center justify-center text-xl hover:bg-red-900/80 hover:border-red-700 transition-all duration-300
+                ${canScrollRight ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+              `}
+            >
+              ›
+            </button>
           </div>
         </div>
       </section>
