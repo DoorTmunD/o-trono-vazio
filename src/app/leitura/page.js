@@ -22,14 +22,19 @@ const capitulos = [
   {
     id: 1,
     numero: 'Capítulo I',
-    titulo: 'O Início das Sombras',
+    titulo: 'O Despertar do Abismo',
     epigrafe: '"O primeiro passo para o abismo começa com uma escolha que parece insignificante."',
     status: 'disponivel',
+    downloads: {
+      pdf: '/capitulos/capitulo-1.pdf',
+    },
     texto: [
-      // Substitua cada string abaixo por um parágrafo real do seu capítulo
-      'Adicione aqui o primeiro parágrafo do Capítulo I.',
-      'Adicione aqui o segundo parágrafo. Cada string neste array será exibida como um parágrafo separado.',
-      'Continue adicionando parágrafos conforme necessário. Quando terminar, salve o arquivo e a página será atualizada automaticamente.',
+      'Por dois milênios, o silêncio foi seu único companheiro, e a agonia, sua única certeza. No poço mais profundo do Inferno, onde a luz é um mito e a esperança um insulto, o Anjo Sereth foi forjado na tortura ininterrupta. Suas asas, outrora símbolos de glória, tornaram-se cicatrizes brancas de uma traição esquecida.',
+      'Mas o destino tem mãos profanas.',
+      'Resgatado pelas mãos de uma demônia e marcado pelo sangue de uma cruz invertida, Sereth caminha agora pelas ruas de uma Londres envolta em sombras e segredos. Com cabelos prateados manchados pela corrupção e olhos cinzentos como a névoa, ele não busca redenção, mas as respostas escondidas entre os livros da Biblioteca Maughan e os sussurros do submundo.',
+      'Por que o anjo mais resiliente do cosmos foi condenado ao esquecimento? Que segredo seu Nome Verdadeiro esconde?',
+      'Prepare-se para entrar em um mundo onde anjos queimam, demônios sangram e o vazio reclama seu trono. Conheça Sereth: o anjo que sobreviveu ao fim de todas as coisas para garantir que a sua jornada seja apenas o começo do caos.',
+      'A ausência nunca pesou tanto. O Trono Vazio espera por você.',
     ],
   },
   {
@@ -62,8 +67,24 @@ const calcularTempo = (texto) => {
 export default function Leitura() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [capituloAberto, setCapituloAberto] = useState(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => { setIsLoaded(true); }, []);
+
+  useEffect(() => {
+    if (!capituloAberto) { setScrollProgress(0); return; }
+    const handleScroll = () => {
+      const el = document.getElementById(`cap-${capituloAberto}`);
+      if (!el) return;
+      const elTop = el.getBoundingClientRect().top + window.scrollY;
+      const progress = Math.min(100, Math.max(0,
+        ((window.scrollY - elTop) / el.offsetHeight) * 100
+      ));
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [capituloAberto]);
 
   const toggleCapitulo = (id) => {
     const abrindo = capituloAberto !== id;
@@ -84,6 +105,15 @@ export default function Leitura() {
 
   return (
     <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+
+      {/* Barra de progresso de leitura */}
+      <div className="fixed top-0 left-0 right-0 z-[60] h-0.5 bg-neutral-900 pointer-events-none">
+        <div
+          className="h-full bg-gradient-to-r from-red-900 via-amber-700 to-amber-500 transition-[width] duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       <Nav />
 
       {/* Cabeçalho */}
@@ -167,6 +197,19 @@ export default function Leitura() {
                       <p key={i}>{paragrafo}</p>
                     ))}
                   </div>
+
+                  {/* Download do capítulo completo */}
+                  {cap.downloads?.pdf && (
+                    <div className="flex flex-wrap gap-3 mt-12">
+                      <a
+                        href={cap.downloads.pdf}
+                        download
+                        className="inline-flex items-center gap-2 px-5 py-2.5 border border-neutral-800 text-neutral-400 hover:border-amber-700 hover:text-amber-600 text-xs font-bold tracking-widest uppercase transition-all duration-300"
+                      >
+                        <span>↓</span> Capítulo Completo (PDF)
+                      </a>
+                    </div>
+                  )}
 
                   {/* Navegação entre capítulos */}
                   <div className="flex justify-between items-start mt-16 pt-8 border-t border-neutral-800/40 gap-8">
