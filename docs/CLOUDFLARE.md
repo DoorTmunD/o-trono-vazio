@@ -1,8 +1,8 @@
 # Cloudflare — beta pública
 
-Status: adaptação validada localmente; ainda sem publicação remota. URL provisória configurada: https://o-trono-vazio-beta.doortmund.workers.dev
+Status: adaptação validada localmente; publicação remota em preparação. URL configurada: https://o-trono-vazio-beta.trono-writer.workers.dev
 
-Em 28/09/2026, a API Cloudflare informou que `writer.workers.dev` está ocupado e `trono-writer.workers.dev` está disponível. A escolha do endereço está pendente. O subdomínio é compartilhado pela conta: renomeá-lo também muda o endereço público do Worker `cs-arena`, que tem `workers.dev` habilitado. Depois de definir o nome, atualize `vars.SITE_URL`, refaça o build e valide a URL publicada.
+Em 28/09/2026, o subdomínio da conta foi renomeado de `doortmund` para `trono-writer` após autorização. O Worker existente `cs-arena` passa a responder em https://cs-arena.trono-writer.workers.dev; seu código e suas configurações não foram alterados.
 
 Worker: `o-trono-vazio-beta`. A conta está fixada em `wrangler.jsonc`; o identificador da conta é público, não uma credencial. O projeto `cs-arena` existente na conta não participa deste deploy.
 

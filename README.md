@@ -2,7 +2,7 @@
 
 Site da saga de Dark Fantasy de Danilo Simões. Next.js 16 (App Router), React 19, JavaScript com verificação estática e Tailwind CSS 4. Hospedagem da beta: **Cloudflare Workers**, com OpenNext e assets estáticos. A configuração anterior da Vercel permanece como alternativa.
 
-Configuração Cloudflare pronta e validada localmente. A publicação pública aguarda a definição do endereço: `writer.workers.dev` está ocupado, e a URL atual do Wrangler ainda é provisória. Procedimento de publicação e validação: [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md).
+Endereço da beta: **https://o-trono-vazio-beta.trono-writer.workers.dev**. Procedimento de publicação e validação: [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md).
 
 ## Requisitos e instalação
 
