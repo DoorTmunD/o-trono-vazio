@@ -1,11 +1,14 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import PageTransition from "@/components/PageTransition";
+import { getSiteUrl } from "@/config/site";
+import PageTransition from "@/components/layout/PageTransition";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: getSiteUrl(),
+  alternates: { canonical: "/" },
   title: {
     default: 'O Trono Vazio',
     template: '%s | O Trono Vazio',
@@ -17,8 +20,6 @@ export const metadata = {
     images: [
       {
         url: '/capa-biblioteca.png',
-        width: 1200,
-        height: 630,
         alt: 'O Trono Vazio — Capa da Biblioteca',
       },
     ],
@@ -36,7 +37,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#0a0505] text-gray-200`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#08090a] text-gray-200`}>
         <PageTransition>{children}</PageTransition>
       </body>
     </html>

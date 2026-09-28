@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { cinzel, montserrat } from '@/lib/fonts';
-import Nav from '@/components/Nav';
+import { cinzel, montserrat } from '@/config/fonts';
+import Nav from '@/components/layout/Nav';
 
-export const metadata = { title: 'Página não encontrada' };
+export const metadata = { title: 'Página não encontrada', robots: { index: false }, alternates: { canonical: null } };
 
 export default function NotFound() {
   return (

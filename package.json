@@ -6,17 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --project jsconfig.json",
+    "test": "node --conditions=react-server --test tests/unit/*.test.js",
+    "test:e2e": "playwright test",
+    "check:assets": "node scripts/check-assets.js",
+    "check:production": "node --env-file-if-exists=.env.local --conditions=react-server scripts/check-production.js",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run check:assets",
+    "test:browser:install": "node scripts/install-browser.js",
+    "check:vercel": "node --conditions=react-server scripts/check-vercel.js"
   },
   "dependencies": {
-    "next": "^16.2.4",
+    "next": "16.3.3",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
     "eslint": "^9",
-    "eslint-config-next": "16.1.7",
-    "tailwindcss": "^4"
+    "eslint-config-next": "16.3.3",
+    "tailwindcss": "^4",
+    "typescript": "5.9.3"
+  },
+  "type": "module",
+  "engines": {
+    "node": "24.x",
+    "npm": ">=11 <12"
   }
 }

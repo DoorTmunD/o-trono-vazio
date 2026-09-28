@@ -1,108 +1,77 @@
-'use client'; 
+'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { cinzel, montserrat } from '@/lib/fonts';
+import Link from 'next/link';
+import { cinzel, montserrat, lora } from '@/config/fonts';
+import Nav from '@/components/layout/Nav';
+import CrownScene from '@/components/experience/CrownScene';
+import styles from './entrance.module.css';
+
+const paths = [
+  { number: 'I', name: 'A obra', text: 'Toda história começa com um chamado.', link: '/leitura', action: 'Começar a ler' },
+  { number: 'II', name: 'O universo', text: 'Há segredos além das páginas.', link: '/codex', action: 'Explorar o Códex' },
+  { number: 'III', name: 'A criação', text: 'Entre rascunhos, sombras e descobertas.', link: '/bastidores', action: 'Conhecer os bastidores' },
+];
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isEntering, setIsEntering] = useState(false);
+  const timer = useRef(null);
+  const [entering, setEntering] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (sessionStorage.getItem('otv_visitou')) {
-      router.replace('/santuario');
-      return;
-    }
-    setIsLoaded(true);
-  }, []);
+    try {
+      if (sessionStorage.getItem('otv_visitou')) router.replace('/santuario');
+    } catch { /* A entrada também funciona sem armazenamento. */ }
+    return () => clearTimeout(timer.current);
+  }, [router]);
 
-  const handleEnter = () => {
-    sessionStorage.setItem('otv_visitou', '1');
-    setIsEntering(true);
-    setTimeout(() => {
-      router.push('/santuario');
-    }, 3000);
-  };
+  function enter() {
+    if (entering) return;
+    try { sessionStorage.setItem('otv_visitou', '1'); } catch { /* Opcional. */ }
+    setEntering(true);
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 650;
+    timer.current = setTimeout(() => router.push('/santuario'), delay);
+  }
 
   return (
-    <main className="flex h-screen w-full flex-col items-center justify-center relative overflow-hidden bg-black antialiased">
-      
-      {/* FUNDO DA BIBLIOTECA */}
-      <div 
-        className={`absolute inset-0 z-0 w-full h-full transition-all ease-out
-          ${!isLoaded ? 'scale-110 opacity-0 duration-0' : 'scale-100 opacity-100 duration-[15000ms]'}
-          ${isEntering ? 'scale-[2.5] opacity-0 blur-md duration-[3000ms] ease-in-out' : ''}
-        `}
-      >
-        <Image
-          src="/capa-biblioteca.png"
-          alt="Biblioteca do Trono Vazio"
-          fill
-          sizes="100vw"
-          priority
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/95 z-10"></div>
-      </div>
-
-      {/* CONTEÚDO CENTRAL */}
-      <div 
-        className={`z-20 flex flex-col items-center gap-16 text-center transition-all ease-out
-          ${isEntering ? 'opacity-0 translate-y-[-100px] blur-md pointer-events-none duration-[1500ms]' : ''}
-        `}
-      >
-        <div className="space-y-8 flex flex-col items-center">
-          
-          <h1 className={`${cinzel.className} text-6xl md:text-8xl lg:text-9xl text-white tracking-wider drop-shadow-[0_0_25px_rgba(0,0,0,1)] transition-all duration-[3000ms] ease-out
-            ${isLoaded ? 'opacity-100 translate-y-0 delay-[2000ms]' : 'opacity-0 translate-y-10'}
-          `}>
-            O TRONO VAZIO
-          </h1>
-          
-          <div className={`flex items-center gap-4 transition-all duration-[2000ms] ease-out ${isLoaded ? 'opacity-100 delay-[4000ms]' : 'opacity-0'}`}>
-            <div className={`h-[1px] bg-amber-700/50 transition-all duration-[2000ms] ease-out ${isLoaded ? 'w-16 delay-[4500ms]' : 'w-0'}`}></div>
-            <p className={`${montserrat.className} text-xl md:text-2xl font-light text-gray-300 tracking-[0.4em] uppercase drop-shadow-md`}>
-              Os segredos aguardam
-            </p>
-            <div className={`h-[1px] bg-amber-700/50 transition-all duration-[2000ms] ease-out ${isLoaded ? 'w-16 delay-[4500ms]' : 'w-0'}`}></div>
+    <div className={`${styles.entrance} ${montserrat.className} ${entering ? styles.entering : ''}`}>
+      <Nav />
+      <main id="conteudo">
+        <section className={styles.hero} aria-labelledby="saga-title">
+          <div className={styles.backdrop} aria-hidden="true">
+            <Image src="/capa-biblioteca.png" alt="" fill sizes="100vw" priority className={styles.library} />
           </div>
-        </div>
-
-        {/* O BOTÃO DEFINITIVO: Contraste Absoluto */}
-        <button 
-          onClick={handleEnter}
-          className={`group relative px-10 py-5 mt-6 cursor-pointer overflow-hidden transition-all duration-[3000ms] ease-out 
-            
-            
-            border-2 border-white/60 bg-white/10 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.1)]
-            
-            
-            hover:border-red-600 hover:bg-black hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] hover:duration-500
-            
-            ${!isLoaded ? 'opacity-0 translate-y-8 pointer-events-none' : 'opacity-100 translate-y-0 delay-[2000ms] pointer-events-auto'}
-          `}
-        >
-          {/* Fogo subindo (Visível apenas no hover) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-red-950/90 via-red-900/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-0"></div>
-          
-          {/* O TEXTO */}
-          <span className={`${cinzel.className} relative z-20 text-lg md:text-2xl tracking-[0.3em] flex items-center justify-center gap-6 transition-all duration-500
-            
-            /* Texto Anjo: Branco puro com sombra preta para leitura perfeita */
-            text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)] font-bold
-            
-            /* Texto Demônio: Vermelho ardente, sombra brilhante, leve aumento de tamanho */
-            group-hover:text-red-400 group-hover:drop-shadow-[0_0_15px_rgba(255,0,0,1)] group-hover:scale-105
-          `}>
-            <span className="text-white/80 group-hover:text-red-600 transition-colors duration-500 text-sm">✧</span>
-            ENTRAR NO SANTUÁRIO
-            <span className="text-white/80 group-hover:text-red-600 transition-colors duration-500 text-sm">✧</span>
-          </span>
-        </button>
-      </div>
-      
-    </main>
+          <div className={styles.heroGrid}>
+            <div className={styles.copy}>
+              <p className={styles.eyebrow}><span /> Uma saga de dark fantasy</p>
+              <h1 id="saga-title" className={`${cinzel.className} ${styles.title}`}><span>O TRONO</span><span>VAZIO<span className={styles.titlePeriod}>.</span></span></h1>
+              <p className={`${lora.className} ${styles.tagline}`}>Os segredos aguardam.</p>
+              <p className={styles.description}>Entre luz e sombras, cada destino esconde uma história. Atravesse o limiar e descubra o universo de O Trono Vazio.</p>
+              <div className={styles.actions}>
+                <button type="button" onClick={enter} disabled={entering} className={styles.enterButton} aria-label="ENTRAR NO SANTUÁRIO">
+                  <span>{entering ? 'Atravessando o limiar' : 'Entrar no Santuário'}</span><span aria-hidden="true">↗</span>
+                </button>
+                <Link href="/leitura" className={styles.readLink}>Ler o primeiro capítulo <span aria-hidden="true">→</span></Link>
+              </div>
+              <p className={styles.author}><span /> Um universo de <strong>Danilo Simões</strong></p>
+            </div>
+            <div className={styles.artifact}>
+              <CrownScene />
+              <div className={styles.artifactCaption} aria-hidden="true"><span>O poder tem um preço.</span><span>O silêncio, também.</span></div>
+            </div>
+          </div>
+          <div className={styles.heroFoot}><span>Fantasia sombria · Um universo a descobrir</span><a href="#explorar">Explore além do limiar <span aria-hidden="true">↓</span></a></div>
+        </section>
+        <section id="explorar" className={styles.paths} aria-label="Explore o universo">
+          {paths.map(path => <Link href={path.link} key={path.number} className={styles.path}>
+            <span className={styles.pathNumber}>{path.number}</span>
+            <div><h2 className={cinzel.className}>{path.name}</h2><p>{path.text}</p><span className={styles.pathAction}>{path.action} <span aria-hidden="true">↗</span></span></div>
+          </Link>)}
+        </section>
+      </main>
+      <footer className={styles.footer}><span>© {new Date().getFullYear()} O Trono Vazio</span><span>Escrito nas sombras. Feito para ser descoberto.</span><Link href="/contato">Fale com o autor ↗</Link></footer>
+    </div>
   );
 }
