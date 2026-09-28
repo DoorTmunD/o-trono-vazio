@@ -112,6 +112,17 @@ test('menu navega e fecha; links ativos são identificados', async ({ page, isMo
   else await expect(nav.getByRole('link', { name: 'Leitura', exact: true }).filter({ visible: true })).toHaveAttribute('aria-current', 'page');
 });
 
+test('pré-carregamento de páginas estabiliza sem repetir requisições continuamente', async ({ page }) => {
+  let prefetches = 0;
+  page.on('request', request => {
+    if (request.headers()['next-router-prefetch'] === '1') prefetches += 1;
+  });
+  await page.goto('/santuario');
+  // Captura o loop Next 16/OpenNext que ultrapassava 2.700 requests em 8s.
+  await page.waitForTimeout(4000);
+  expect(prefetches).toBeLessThan(40);
+});
+
 test('capítulos abrem por teclado, fecham e mantêm os bloqueados', async ({ page, request }) => {
   await page.goto('/leitura');
   const chapter = page.getByRole('button', { name: /Capítulo I O Despertar/ });
@@ -162,18 +173,33 @@ test('Bastidores filtra posts e informa categoria vazia', async ({ page }) => {
   await expect(page.getByRole('status')).toHaveText('Nenhum registro nesta categoria por enquanto.');
 });
 
-test('newsletter real sem configuração exibe erro nos dois formulários', async ({ page }) => {
+test('beta informa abertura futura da newsletter sem coletar e-mails', async ({ page }) => {
+  test.skip(process.env.NEXT_PUBLIC_NEWSLETTER_ENABLED === 'true', 'A newsletter foi habilitada neste build.');
   await page.goto('/santuario');
-  for (const name of ['Aviso de lançamento', 'Novidades do livro']) {
-    const form = page.getByRole('form', { name });
-    await form.getByLabel('Seu e-mail').fill('teste@example.com');
-    const responsePromise = page.waitForResponse((response) => response.url().endsWith('/api/newsletter') && response.request().method() === 'POST');
-    await form.getByRole('button').click();
-    expect((await responsePromise).status()).toBe(503);
-    await expect(form.locator('..').getByRole('alert')).toHaveText('Erro ao cadastrar. Tente novamente.');
-    await expect(form.getByRole('button')).toBeEnabled();
-  }
+  await expect(page.getByText('Inscrições em breve.', { exact: true })).toHaveCount(2);
+  await expect(page.getByRole('form', { name: 'Aviso de lançamento' })).toHaveCount(0);
+  await expect(page.getByRole('form', { name: 'Novidades do livro' })).toHaveCount(0);
+  await expect(page.getByLabel('Seu e-mail')).toHaveCount(0);
   await expect(page.getByText(/Bem-vindo às sombras/)).toHaveCount(0);
+});
+
+test('contato e rodapé não publicam perfis provisórios', async ({ page }) => {
+  await page.goto('/contato');
+  await expect(page.locator('a[href*="seu_usuario"], a[href*="seu_id"]')).toHaveCount(0);
+  const profiles = page.getByRole('region', { name: 'Redes sociais do autor' }).locator('a[target="_blank"]');
+  if (await profiles.count() === 0) {
+    await expect(page.getByText('Os canais oficiais serão divulgados em breve.', { exact: false })).toBeVisible();
+    await page.getByRole('link', { name: 'Explorar os bastidores' }).click();
+    await expect(page).toHaveURL(/\/bastidores$/);
+  }
+});
+
+test('API local sem configuração recusa o cadastro', async ({ request, baseURL }) => {
+  const localTarget = ['localhost', '127.0.0.1', '[::1]'].includes(new URL(baseURL).hostname);
+  test.skip(!localTarget || process.env.PLAYWRIGHT_UNCONFIGURED_NEWSLETTER !== '1', 'Exige servidor local sem credenciais e confirmação explícita de teste.');
+  const response = await request.post('/api/newsletter', { data: { email: 'teste@example.com' } });
+  expect(response.status()).toBe(503);
+  expect((await response.json()).ok).toBeUndefined();
 });
 
 test('404 e contratos HTTP da API', async ({ page, request }) => {
@@ -187,10 +213,10 @@ test('404 e contratos HTTP da API', async ({ page, request }) => {
   expect(await malformed.json()).toEqual({ error: 'Email inválido.' });
 });
 
-test('conteúdo continua visível sem JavaScript e com movimento reduzido', async ({ browser, page }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+test('conteúdo continua visível sem JavaScript e com movimento reduzido', async ({ browser, page, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
   const noJs = await context.newPage();
-  await noJs.goto('http://127.0.0.1:3100/santuario');
+  await noJs.goto('/santuario');
   await expect(noJs.getByRole('heading', { level: 1 })).toBeVisible();
   await expect(noJs.locator('main')).toHaveCSS('opacity', '1');
   await context.close();

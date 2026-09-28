@@ -2,7 +2,8 @@ import NewsletterForm from '@/components/newsletter/NewsletterForm';
 import Link from 'next/link';
 import { cinzel, montserrat } from '@/config/fonts';
 import { navLinks } from '@/config/navigation';
-import { redesSociais } from '@/content/redes-sociais';
+import { newsletterEnabled } from '@/config/features';
+import { redesSociaisPublicadas } from '@/content/redes-sociais';
 import styles from './layout-shell.module.css';
 
 export default function Footer() {
@@ -35,20 +36,20 @@ export default function Footer() {
 
           <div className={styles.footerNewsletter}>
             <h3 className={styles.footerLabel}>Cartas das sombras</h3>
-            <p>Há histórias que ainda não foram contadas. Receba novidades e acompanhe os próximos capítulos.</p>
+            <p>{newsletterEnabled ? 'Há histórias que ainda não foram contadas. Receba novidades e acompanhe os próximos capítulos.' : 'Há histórias que ainda não foram contadas. Enquanto preparamos as próximas cartas, explore os bastidores deste universo.'}</p>
             <NewsletterForm />
           </div>
         </div>
 
         <div className={styles.footerBottom}>
           <p>© {new Date().getFullYear()} O Trono Vazio — Danilo Simões.<br className={styles.mobileBreak} /> Todos os direitos reservados.</p>
-          <div className={styles.socialLinks}>
-            {redesSociais.map(rede => (
+          {redesSociaisPublicadas.length > 0 && <div className={styles.socialLinks}>
+            {redesSociaisPublicadas.map(rede => (
               <a key={rede.nome} href={rede.href} target="_blank" rel="noopener noreferrer" aria-label={rede.nome}>
                 {rede.nome}<span aria-hidden="true">↗</span>
               </a>
             ))}
-          </div>
+          </div>}
         </div>
       </div>
     </footer>

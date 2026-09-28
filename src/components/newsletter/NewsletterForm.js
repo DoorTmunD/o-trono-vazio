@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useRef, useState } from 'react';
+import { newsletterEnabled } from '@/config/features';
 
 export default function NewsletterForm({ variant = 'footer' }) {
   const id = useId();
@@ -11,7 +12,7 @@ export default function NewsletterForm({ variant = 'footer' }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (pending.current || !email.trim()) return;
+    if (!newsletterEnabled || pending.current || !email.trim()) return;
     pending.current = true;
     setEstado('loading');
     try {
@@ -30,6 +31,15 @@ export default function NewsletterForm({ variant = 'footer' }) {
     } finally {
       pending.current = false;
     }
+  }
+
+  if (!newsletterEnabled) {
+    return (
+      <p className={`border border-amber-900/40 bg-neutral-900/40 px-5 py-4 text-sm leading-relaxed text-neutral-300 ${launch ? 'mx-auto max-w-md text-center' : ''}`}>
+        <span className="block text-amber-200/80">Inscrições em breve.</span>
+        <span className="mt-1 block text-xs text-neutral-400">A lista de novidades será aberta em uma próxima atualização.</span>
+      </p>
+    );
   }
 
   return (

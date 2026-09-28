@@ -1,12 +1,14 @@
 # O Trono Vazio
 
-Site da saga de Dark Fantasy de Danilo Simões. Next.js 16 (App Router), React 19, JavaScript com verificação estática e Tailwind CSS 4. Hospedagem definida: **Vercel**.
+Site da saga de Dark Fantasy de Danilo Simões. Next.js 16 (App Router), React 19, JavaScript com verificação estática e Tailwind CSS 4. Hospedagem da beta: **Cloudflare Workers**, com OpenNext e assets estáticos. A configuração anterior da Vercel permanece como alternativa.
+
+Configuração Cloudflare pronta e validada localmente. A publicação pública aguarda a definição do endereço: `writer.workers.dev` está ocupado, e a URL atual do Wrangler ainda é provisória. Procedimento de publicação e validação: [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md).
 
 ## Requisitos e instalação
 
 - Node.js **24.x** e npm **11.x** (`.nvmrc` e `package.json`).
 - Rede disponível para instalar pacotes e baixar as fontes Google durante o build.
-- Conta Brevo com chave de API e uma lista existente para a newsletter. Não há banco local, autenticação, uploads nem envio de e-mails próprio: o servidor cadastra contatos na Brevo.
+- Conta Brevo com chave de API e uma lista existente para habilitar a newsletter. Na beta, as inscrições estão desativadas e a interface informa a abertura futura. Não há banco local, autenticação, uploads nem envio de e-mails próprio.
 
 ```bash
 npm ci
@@ -29,6 +31,7 @@ Em macOS/Linux: `cp .env.example .env.local`.
 | `BREVO_API_KEY` | Obrigatória para cadastro real | Chave privada da API Brevo, somente no servidor. |
 | `BREVO_LIST_ID` | Obrigatória para cadastro real | ID inteiro positivo de uma lista existente na mesma conta Brevo. Não há lista padrão. |
 | `SITE_URL` | URL pública no build; opcional na Vercel | Origem HTTPS completa, sem caminho, query ou credenciais. Usada em canonical e imagens sociais. |
+| `NEXT_PUBLIC_NEWSLETTER_ENABLED` | `false` na beta | Flag pública de disponibilidade. Exige novo build para ativar inscrições; nunca contém credenciais. |
 
 Nunca use `NEXT_PUBLIC_` para credenciais. `.env.local` não deve ser versionado. Nenhum segredo deve ser colocado no README, no frontend ou em `vercel.json`.
 
@@ -136,7 +139,23 @@ Respeite a caixa dos nomes: `/Tom.JPG` e `/Sereth.jpg` têm grafias diferentes. 
 
 O redesign de setembro de 2026 mantém a identidade dark com marfim e ouro envelhecido. A entrada inclui uma coroa WebGL original e interativa, sem bibliotecas extras; o Santuário apresenta um livro em perspectiva CSS 3D. Navegação, cards, leitor, Códex, Bastidores, Contato e rodapé compartilham a direção visual. Detalhes de manutenção em [docs/REBUILD_VISUAL.md](docs/REBUILD_VISUAL.md).
 
-## Publicar na Vercel
+## Publicar no Cloudflare
+
+O deploy usa `@opennextjs/cloudflare` e Wrangler com versões fixadas no lockfile. As páginas prerenderizadas usam o cache de Static Assets; `/api/newsletter` continua sendo uma rota dinâmica. A beta não precisa de R2, D1, Durable Objects ou Cloudflare Images.
+
+```bash
+npm ci
+npm run verify
+npm run check:cloudflare
+npm run build:cloudflare
+npm run preview:cloudflare -- --port 8787
+```
+
+Após validar o preview, `npm run deploy:cloudflare` verifica a política da beta, reconstrói o Worker e publica na conta configurada em `wrangler.jsonc`. Requer `npx wrangler login` ou uma credencial de CI com permissão no Worker. No Windows, use WSL/CI Linux se o ambiente impedir o build ou os processos do Wrangler.
+
+`vars.SITE_URL` no Wrangler é aplicado também ao build pelo script do projeto. As imagens locais são servidas diretamente como assets; a API de otimização da Vercel não é usada. Newsletter, perfis provisórios e PDF ausente não são apresentados como funcionalidades disponíveis. O gate `check:cloudflare` mantém erros de imagens/conteúdo e URL pública inválida como bloqueadores.
+
+## Publicar na Vercel (alternativa)
 
 1. Resolva as pendências abaixo e execute `npm run check:production` com as variáveis reais na sua máquina ou no ambiente de destino.
 2. Execute `npm ci`, `npm run verify`, `npm run build` e `npm run test:e2e` em rede com acesso aos recursos externos.
@@ -147,7 +166,7 @@ O redesign de setembro de 2026 mantém a identidade dark com marfim e ouro envel
 7. No build de Production, `check:vercel` executa a checagem obrigatória de publicação. O build falha se faltar configuração ou houver pendência editorial conhecida. Faça a publicação pelo fluxo do projeto Vercel depois de revisar o resultado.
 8. No endereço publicado, confirme que o e-mail autorizado aparece na lista Brevo correta e que o PDF baixa. Se alterar variáveis, conteúdo ou domínio, gere novo deployment.
 
-Não foi feita publicação remota por esta refatoração.
+Consulte [CLOUDFLARE.md](docs/CLOUDFLARE.md) para a publicação da beta; esta seção da Vercel descreve somente o fluxo alternativo.
 
 ## Pendências atuais
 

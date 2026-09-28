@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { pageMetadata } from '@/config/site';
+import { newsletterEnabled } from '@/config/features';
 import { cinzel, montserrat } from '@/config/fonts';
 import CharacterCarousel from '@/components/santuario/CharacterCarousel';
 import AtmosphereBook from '@/components/santuario/AtmosphereBook';
 import NewsletterForm from '@/components/newsletter/NewsletterForm';
 import styles from '@/components/santuario/santuario.module.css';
 
-export const metadata = pageMetadata('O Santuário', 'Conheça O Trono Vazio, seus personagens e receba novidades sobre o lançamento.', '/santuario');
+export const metadata = pageMetadata('O Santuário', 'Conheça O Trono Vazio, seus personagens e acompanhe a criação deste universo de dark fantasy.', '/santuario');
 
 export default function SantuarioHome() {
   return (
@@ -45,10 +46,10 @@ export default function SantuarioHome() {
         <div className={styles.launchOrnament} aria-hidden="true"><span>✧</span></div>
         <div className={styles.launchInner}>
           <p className={styles.eyebrow}>O próximo capítulo</p>
-          <h2 id="launch-title" className={`${cinzel.className} ${styles.launchTitle}`}>Seja o primeiro<br /><em>a saber.</em></h2>
-          <p className={styles.launchDescription}>O Trono Vazio está sendo forjado. Entre para a lista e receba a notícia no momento em que o livro estiver disponível.</p>
+          <h2 id="launch-title" className={`${cinzel.className} ${styles.launchTitle}`}>{newsletterEnabled ? <>Seja o primeiro<br /><em>a saber.</em></> : <>A história está<br /><em>sendo forjada.</em></>}</h2>
+          <p className={styles.launchDescription}>{newsletterEnabled ? 'O Trono Vazio está sendo forjado. Entre para a lista e receba a notícia no momento em que o livro estiver disponível.' : 'O Santuário está em beta. Explore o primeiro capítulo, conheça os personagens e acompanhe o nascimento de O Trono Vazio nos bastidores.'}</p>
           <NewsletterForm variant="launch" />
-          <p className={styles.launchNote}>Das sombras, diretamente para você.</p>
+          <p className={styles.launchNote}>{newsletterEnabled ? 'Das sombras, diretamente para você.' : 'Este universo continua a crescer.'}</p>
         </div>
       </section>
     </main>

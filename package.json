@@ -14,7 +14,11 @@
     "check:production": "node --env-file-if-exists=.env.local --conditions=react-server scripts/check-production.js",
     "verify": "npm run lint && npm run typecheck && npm test && npm run check:assets",
     "test:browser:install": "node scripts/install-browser.js",
-    "check:vercel": "node --conditions=react-server scripts/check-vercel.js"
+    "check:vercel": "node --conditions=react-server scripts/check-vercel.js",
+    "build:cloudflare": "node scripts/build-cloudflare.js",
+    "preview:cloudflare": "opennextjs-cloudflare preview",
+    "check:cloudflare": "node --conditions=react-server scripts/check-cloudflare.js",
+    "deploy:cloudflare": "npm run check:cloudflare && npm run build:cloudflare && opennextjs-cloudflare deploy -- --keep-vars"
   },
   "dependencies": {
     "next": "16.3.3",
@@ -23,6 +27,7 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.6",
     "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "24.13.3",
@@ -31,7 +36,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "wrangler": "4.143.0"
   },
   "type": "module",
   "engines": {

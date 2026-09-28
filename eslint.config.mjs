@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     ".playwright/**",
     "test-results/**",
     "playwright-report/**",
+    ".open-next/**",
+    ".wrangler/**",
   ]),
 ]);
 

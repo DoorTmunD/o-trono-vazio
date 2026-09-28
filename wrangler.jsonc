@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "o-trono-vazio-beta",
+  "account_id": "996a024c9e2fcf4d873ebc5870250651",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-28",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "o-trono-vazio-beta"
+    }
+  ],
+  "vars": {
+    "SITE_URL": "https://o-trono-vazio-beta.doortmund.workers.dev",
+    "NEXT_PUBLIC_NEWSLETTER_ENABLED": "false"
+  },
+  "observability": { "enabled": true }
+}

@@ -3,6 +3,7 @@
 // Consumido pelo Footer (lista compacta) e /contato (com descrição).
 //
 // Para adicionar uma rede, copie um bloco { } e cole abaixo.
+// Perfis incompletos ficam no registro editorial, sem links públicos.
 // ============================================================
 export const redesSociais = [
   {
@@ -30,3 +31,13 @@ export const redesSociais = [
     descricao: 'Adicione O Trono Vazio à sua lista de leituras e acompanhe o lançamento.',
   },
 ];
+
+export const redesSociaisPublicadas = redesSociais.filter((rede) => {
+  if (/seu_usuario|seu_id/i.test(rede.href)) return false;
+  try {
+    const url = new URL(rede.href);
+    return url.protocol === 'https:' && !url.username && !url.password;
+  } catch {
+    return false;
+  }
+});
