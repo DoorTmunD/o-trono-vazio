@@ -1,10 +1,12 @@
 # Cloudflare — beta pública
 
-Status: beta publicada em 28/09/2026. URL pública: https://o-trono-vazio-beta.trono-writer.workers.dev
+Status: beta publicada em 28/09/2026 e atualizada com a abertura cinematográfica em 29/09/2026. URL pública: https://o-trono-vazio-beta.trono-writer.workers.dev
 
-Versão Cloudflare: `6f733e6f-7a39-44bf-a995-d1b479ee05d1`, gerada a partir do commit `269cf01`. As seis páginas públicas responderam HTTP 200, com canonical e imagens sociais na nova origem e cache HIT.
+Versão Cloudflare: `c681473a-091f-41a0-b9d4-008ab712ce7a`, gerada a partir do commit `6ba8e56`. As sete páginas públicas responderam HTTP 200, com canonical e imagens sociais na origem correta e cache HIT. A abertura está em `/`; Entrar e Pular abertura levam à página anterior, agora em `/inicio`.
 
-Validação na URL pública: **40 testes E2E aprovados**, em desktop e celular; os dois testes exclusivos de cadastro local foram pulados intencionalmente. A cena WebGL, pausa e movimento reduzido, navegação, leitura, filtros, modais, carrossel, imagens e contratos HTTP da API foram verificados.
+Validação local da abertura: **59 testes E2E aprovados**, em desktop e celular, incluindo captura e resolução 3840×2160 e alternativa sem WebGL; o caso 4K é exclusivo de desktop. A cena, a pausa, o movimento reduzido, a entrada por clique/teclado e a navegação sem JavaScript foram verificados, junto às funcionalidades existentes.
+
+Validação na URL pública em 29/09/2026: **57 testes E2E aprovados**, com 3 casos pulados intencionalmente (cadastro exclusivo de localhost em cada perfil e 4K no perfil mobile). Desktop, celular, 4K, metadados e as páginas existentes verificados após o deploy.
 
 Em 28/09/2026, o subdomínio da conta foi renomeado de `doortmund` para `trono-writer` após autorização. O Worker existente `cs-arena` passou a responder em https://cs-arena.trono-writer.workers.dev (HTTPS 200 verificado); seu código e suas configurações não foram alterados.
 

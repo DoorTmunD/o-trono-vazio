@@ -27,4 +27,4 @@ Atualização de 29/09/2026: abertura cinematográfica validada no runtime Worke
 
 Validação realizada em 28/09/2026: lint e tipos aprovados; 21 testes unitários aprovados; build de produção concluído. Os 24 casos de interação passaram em desktop/mobile. Após corrigir o teste para carregar retratos lazy fora da área visível do carrossel, os 12 casos de rotas/imagens/layout passaram na reexecução. O servidor de teste foi encerrado explicitamente ao fim para liberar o teardown do Playwright no Windows; a reexecução terminou com código 0. Preview local verificado com HTTP 200.
 
-PDF do capítulo, perfis sociais reais e credenciais Brevo continuam sendo pendências editoriais/de publicação já existentes. O rebuild visual não publica o site nem configura serviços externos.
+PDF do capítulo, perfis sociais reais e credenciais Brevo continuam sendo pendências editoriais já existentes. O procedimento e o registro da publicação estão em [CLOUDFLARE.md](CLOUDFLARE.md).
