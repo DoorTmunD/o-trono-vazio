@@ -137,7 +137,7 @@ Respeite a caixa dos nomes: `/Tom.JPG` e `/Sereth.jpg` têm grafias diferentes. 
 
 ## Experiência visual
 
-O redesign de setembro de 2026 mantém a identidade dark com marfim e ouro envelhecido. A entrada inclui uma coroa WebGL original e interativa, sem bibliotecas extras; o Santuário apresenta um livro em perspectiva CSS 3D. Navegação, cards, leitor, Códex, Bastidores, Contato e rodapé compartilham a direção visual. Detalhes de manutenção em [docs/REBUILD_VISUAL.md](docs/REBUILD_VISUAL.md).
+O redesign de setembro de 2026 mantém a identidade dark com marfim e ouro envelhecido. A rota `/` apresenta uma abertura cinematográfica interativa: trono de basalto em WebGL, halo dourado, névoa, granulação e câmera sensível ao cursor. O botão Entrar leva à página inicial em `/inicio`, preservando a coroa 3D anterior. Não há avanço automático; existem pausa, movimento reduzido e alternativa estática sem WebGL. A renderização chega a 3840×2160 em telas compatíveis, com limite de pixels menor no celular. O Santuário apresenta um livro em perspectiva CSS 3D. Detalhes de manutenção em [docs/REBUILD_VISUAL.md](docs/REBUILD_VISUAL.md).
 
 ## Publicar no Cloudflare
 

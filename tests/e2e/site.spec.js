@@ -2,7 +2,8 @@ import { existsSync } from 'node:fs';
 import { test, expect } from '@playwright/test';
 
 const pages = [
-  ['/', 'O Trono Vazio'], ['/santuario', 'O Santuário | O Trono Vazio'],
+  ['/', 'O Trono Vazio'], ['/inicio', 'O Trono Vazio'],
+  ['/santuario', 'O Santuário | O Trono Vazio'],
   ['/leitura', 'Leitura | O Trono Vazio'], ['/codex', 'O Códex | O Trono Vazio'],
   ['/bastidores', 'Bastidores | O Trono Vazio'], ['/contato', 'Contato | O Trono Vazio'],
 ];
@@ -50,24 +51,148 @@ for (const [url, title] of pages) {
   });
 }
 
-test('entrada e visita já registrada mantêm navegação', async ({ page }) => {
+test('abertura cinematográfica entra na página inicial pelo botão', async ({ page }) => {
   await page.goto('/');
+  const enter = page.getByRole('link', { name: 'Entrar no universo', exact: true });
+  await expect(enter).toHaveAttribute('href', '/inicio');
+  await enter.click();
+  await expect(page).toHaveURL(/\/inicio$/);
+  await expect(page.getByRole('button', { name: 'ENTRAR NO SANTUÁRIO' })).toBeVisible();
+});
+
+test('abertura cinematográfica entra por teclado', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Entrar no universo', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/inicio$/);
+});
+
+test('visita já registrada mantém a abertura e a página inicial disponíveis', async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('otv_visitou', '1'));
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Entrar no universo', exact: true }).click();
+  await expect(page).toHaveURL(/\/inicio$/);
   await page.getByRole('button', { name: 'ENTRAR NO SANTUÁRIO' }).click();
   await expect(page).toHaveURL(/\/santuario$/);
-  await page.goto('/');
-  await expect(page).toHaveURL(/\/santuario$/);
+  await page.goto('/inicio');
+  await expect(page.getByRole('button', { name: 'ENTRAR NO SANTUÁRIO' })).toBeVisible();
+  await expect(page).toHaveURL(/\/inicio$/);
 });
 
 test('armazenamento bloqueado não impede a entrada', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(window, 'sessionStorage', { get() { throw new DOMException('Blocked', 'SecurityError'); } }));
   await page.goto('/');
+  await page.getByRole('link', { name: 'Entrar no universo', exact: true }).click();
+  await expect(page).toHaveURL(/\/inicio$/);
   await page.getByRole('button', { name: 'ENTRAR NO SANTUÁRIO' }).click();
   await expect(page).toHaveURL(/\/santuario$/);
 });
 
-test('cena 3D permite pausar e retomar; entrada permanece acessível por teclado', async ({ page }) => {
+test('abertura 3D permite pausar e retomar pelo teclado', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
+  const scene = page.getByTestId('cinematic-intro');
+  await expect(page.getByTestId('throne-canvas')).toBeVisible();
+  await expect(page.getByTestId('throne-canvas')).toHaveAttribute('data-ready', 'true');
+  await expect(scene).toHaveAttribute('data-motion', 'active');
+  await page.getByRole('button', { name: 'Pausar abertura', exact: true }).focus();
+  await page.keyboard.press('Space');
+  await expect(scene).toHaveAttribute('data-motion', 'paused');
+  await expect(page.getByRole('button', { name: 'Ativar abertura', exact: true })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(scene).toHaveAttribute('data-motion', 'active');
+});
+
+test('abertura respeita movimento reduzido e permite ativação explícita', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const scene = page.getByTestId('cinematic-intro');
+  await expect(scene).toHaveAttribute('data-motion', 'paused');
+  await page.getByRole('button', { name: 'Ativar abertura', exact: true }).click();
+  await expect(scene).toHaveAttribute('data-motion', 'active');
+  await page.getByRole('button', { name: 'Pausar abertura', exact: true }).click();
+  await expect(scene).toHaveAttribute('data-motion', 'paused');
+  await expect(page.getByRole('link', { name: 'Entrar no universo', exact: true })).toBeVisible();
+});
+
+test('abertura aguarda a escolha do visitante sem avançar automaticamente', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('cinematic-intro')).toBeVisible();
+  await page.waitForTimeout(5000);
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole('link', { name: 'Entrar no universo', exact: true })).toBeVisible();
+});
+
+test('abertura pode ser pulada sem JavaScript', async ({ browser, baseURL, isMobile }) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false, baseURL,
+    viewport: isMobile ? { width: 390, height: 844 } : { width: 1440, height: 900 },
+  });
+  try {
+    const noJs = await context.newPage();
+    await noJs.goto('/');
+    await expect(noJs.getByRole('heading', { level: 1 })).toBeVisible();
+    const skip = noJs.getByRole('link', { name: 'Pular abertura', exact: true });
+    await expect(skip).toHaveAttribute('href', '/inicio');
+    await skip.click();
+    await expect(noJs).toHaveURL(/\/inicio$/);
+    await expect(noJs.getByRole('heading', { level: 1 })).toBeVisible();
+  } finally {
+    await context.close();
+  }
+});
+
+test('abertura preserva o conteúdo e a entrada quando WebGL está indisponível', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.addInitScript(() => {
+    const getContext = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+      if (['webgl', 'webgl2', 'experimental-webgl'].includes(type)) {
+        document.documentElement.dataset.webglUnavailable = 'true';
+        return null;
+      }
+      return getContext.call(this, type, ...args);
+    };
+  });
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-webgl-unavailable', 'true');
+  await expect(page.getByRole('main').getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.getByTestId('throne-canvas')).not.toHaveAttribute('data-ready', 'true');
+  const enter = page.getByRole('link', { name: 'Entrar no universo', exact: true });
+  await expect(enter).toBeVisible();
+  await enter.click();
+  await expect(page).toHaveURL(/\/inicio$/);
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('abertura renderiza em 4K com resolução e orçamento de pixels adequados', async ({ browser, baseURL, isMobile }, testInfo) => {
+  test.skip(isMobile, 'A verificação 4K usa uma tela de desktop.');
+  const context = await browser.newContext({
+    baseURL, viewport: { width: 3840, height: 2160 }, deviceScaleFactor: 1,
+    reducedMotion: 'reduce',
+  });
+  try {
+    const screen = await context.newPage();
+    await screen.goto('/');
+    const canvas = screen.getByTestId('throne-canvas');
+    await expect(canvas).toHaveAttribute('data-ready', 'true');
+    const resolution = await canvas.evaluate((element) => ({ width: element.width, height: element.height }));
+    expect(resolution.width).toBeGreaterThanOrEqual(3800);
+    expect(resolution.height).toBeGreaterThanOrEqual(2100);
+    expect(resolution.width * resolution.height).toBeLessThanOrEqual(8300000);
+    expect(await screen.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await expect(screen.getByRole('link', { name: 'Entrar no universo', exact: true })).toBeVisible();
+    await screen.screenshot({ path: testInfo.outputPath('abertura-4k.png'), animations: 'disabled' });
+  } finally {
+    await context.close();
+  }
+});
+
+test('cena da coroa permite pausar e retomar; entrada permanece acessível por teclado', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/inicio');
   const scene = page.locator('.crown-scene');
   await expect(page.getByTestId('crown-canvas')).toBeVisible();
   await expect(page.getByTestId('crown-canvas')).toHaveAttribute('data-ready', 'true');
@@ -86,9 +211,9 @@ test('cena 3D permite pausar e retomar; entrada permanece acessível por teclado
   await expect(page).toHaveURL(/\/santuario$/);
 });
 
-test('preferência por movimento reduzido inicia a cena pausada e permite controle explícito', async ({ page }) => {
+test('preferência por movimento reduzido inicia a coroa pausada e permite controle explícito', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
+  await page.goto('/inicio');
   const scene = page.locator('.crown-scene');
   await expect(scene).toHaveAttribute('data-motion', 'paused');
   await page.getByRole('button', { name: 'Ativar animação', exact: true }).click();
@@ -221,7 +346,7 @@ test('conteúdo continua visível sem JavaScript e com movimento reduzido', asyn
   await expect(noJs.locator('main')).toHaveCSS('opacity', '1');
   await context.close();
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
+  await page.goto('/inicio');
   await page.getByRole('button', { name: 'ENTRAR NO SANTUÁRIO' }).click();
   await expect(page).toHaveURL(/\/santuario$/);
 });
