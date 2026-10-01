@@ -1,8 +1,12 @@
 # Cloudflare — beta pública
 
-Status: beta publicada em 28/09/2026 e atualizada com a abertura cinematográfica em 29/09/2026. URL pública: https://o-trono-vazio-beta.trono-writer.workers.dev
+Status: beta atualizada em 30/09/2026 com a revisão editorial, novas fontes e coroa/trono 3D de materiais envelhecidos. URL pública: https://o-trono-vazio-beta.trono-writer.workers.dev
 
-Versão Cloudflare: `c681473a-091f-41a0-b9d4-008ab712ce7a`, gerada a partir do commit `6ba8e56`. As sete páginas públicas responderam HTTP 200, com canonical e imagens sociais na origem correta e cache HIT. A abertura está em `/`; Entrar e Pular abertura levam à página anterior, agora em `/inicio`.
+Versão Cloudflare: `0d426ca6-ebe3-434b-972a-1cfc4737a5dd`, gerada a partir do commit `f15c8a4`. Publicada com `npm run deploy:cloudflare`, preservando as variáveis existentes. A abertura está em `/`; Entrar e Pular abertura levam a `/inicio`. Geometria, materiais e textura têm módulos próprios, sem dependências adicionais.
+
+Conferência pública em 30/09/2026: as sete rotas responderam HTTP 200 com canonical correto. Foram comparados 27 assets públicos com o build local `i-nsa7m79eWbu1T1eQUVV`: 18 arquivos JS/CSS, a textura e cinco fontes por SHA-256, além de três manifests por comparação binária. Todos corresponderam. Confirmados Cormorant Garamond, Source Sans 3, Lora, granulação e os novos materiais procedurais de madeira e metal.
+
+Na mesma publicação, **57 testes E2E passaram na URL pública**, em desktop e celular. Os três casos ignorados são intencionais: cadastro local sem credenciais em cada perfil e 4K no mobile. Verificados também 4K no desktop, pausa, movimento reduzido, ausência de WebGL/JavaScript, navegação, leitura, filtros e carrossel.
 
 Validação local da abertura: **59 testes E2E aprovados**, em desktop e celular, incluindo captura e resolução 3840×2160 e alternativa sem WebGL; o caso 4K é exclusivo de desktop. A cena, a pausa, o movimento reduzido, a entrada por clique/teclado e a navegação sem JavaScript foram verificados, junto às funcionalidades existentes.
 
