@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --color-ink: #0d0e0e;
+  --color-paper: #e6dfd1;
+  --color-text-muted: #b0aaa0;
+  --color-bronze: #a99a7e;
+  --color-rule: rgb(169 154 126 / 22%);
+  --surface-grain-opacity: .035;
+}
+
 @layer base {
   html {
     color-scheme: dark;
@@ -7,8 +16,8 @@
     scroll-padding-top: 100px;
   }
   body {
-    background-color: #08090a;
-    color: #eee8dc;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
   }
   ::selection { background: #b9a078; color: #101110; }
   button, a, input { -webkit-tap-highlight-color: transparent; }

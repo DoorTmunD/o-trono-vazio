@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { cinzel, montserrat } from '@/config/fonts';
+import { displayFont, interfaceFont } from '@/config/fonts';
 import Nav from '@/components/layout/Nav';
 
 export const metadata = { title: 'Página não encontrada', robots: { index: false }, alternates: { canonical: null } };
 
 export default function NotFound() {
   return (
-    <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${montserrat.className} flex flex-col`}>
+    <main className={`min-h-screen bg-neutral-950 text-neutral-200 ${interfaceFont.className} flex flex-col`}>
       <Nav />
 
       <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-24">
@@ -18,7 +18,7 @@ export default function NotFound() {
 
           <div className="space-y-3">
             <span className="text-amber-700 text-xs tracking-[0.4em] uppercase font-bold">Erro 404</span>
-            <h1 className={`${cinzel.className} text-5xl md:text-6xl text-white tracking-widest leading-tight`}>
+            <h1 className={`${displayFont.className} text-5xl md:text-6xl text-white tracking-widest leading-tight`}>
               Você se perdeu<br />nas sombras
             </h1>
           </div>

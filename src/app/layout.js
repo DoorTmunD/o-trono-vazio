@@ -1,10 +1,7 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { displayFont, interfaceFont, readingFont } from '@/config/fonts';
 import "./globals.css";
 import { getSiteUrl } from "@/config/site";
 import PageTransition from "@/components/layout/PageTransition";
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata = {
   metadataBase: getSiteUrl(),
@@ -37,7 +34,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#08090a] text-gray-200`}>
+      <body className={`${displayFont.variable} ${interfaceFont.variable} ${readingFont.variable} ${interfaceFont.className} antialiased`}>
         <PageTransition>{children}</PageTransition>
       </body>
     </html>

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { cinzel } from '@/config/fonts';
+import { displayFont } from '@/config/fonts';
 
 export default function CodexDialog({ itemSelecionado, onClose }) {
   const dialogRef = useRef(null);
@@ -69,7 +69,7 @@ export default function CodexDialog({ itemSelecionado, onClose }) {
               <span className="text-amber-600 font-bold tracking-widest text-xs uppercase mb-2 block">
                 {itemSelecionado.titulo}
               </span>
-              <h2 id="codex-dialog-title" className={`${cinzel.className} text-3xl sm:text-4xl text-white mb-8 border-b border-neutral-800 pb-4`}>
+              <h2 id="codex-dialog-title" className={`${displayFont.className} text-3xl sm:text-4xl text-white mb-8 border-b border-neutral-800 pb-4`}>
                 {itemSelecionado.nome}
               </h2>
 

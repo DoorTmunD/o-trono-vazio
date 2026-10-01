@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { cinzel } from '@/config/fonts';
+import { displayFont } from '@/config/fonts';
 import { personagens } from '@/content/personagens';
 import styles from './santuario.module.css';
 
@@ -40,7 +40,7 @@ export default function CharacterCarousel() {
       <div className={styles.sectionHeader}>
         <div>
           <p className={styles.eyebrow}><span /> Destinos entrelaçados <span className={styles.eyebrowDetail}>02 / 03</span></p>
-          <h2 id="characters-title" className={`${cinzel.className} ${styles.sectionTitle}`}>Os Peões no Tabuleiro</h2>
+          <h2 id="characters-title" className={`${displayFont.className} ${styles.sectionTitle}`}>Os Peões no Tabuleiro</h2>
         </div>
         <Link href="/codex" className={styles.textLink}>Todos os registros <span aria-hidden="true">↗</span></Link>
       </div>
@@ -57,7 +57,7 @@ export default function CharacterCarousel() {
               <span className={styles.characterNumber}>{String(index + 1).padStart(2, '0')}</span>
               <div className={styles.characterContent}>
                 <p className={styles.characterRole}>{personagem.titulo}</p>
-                <h3 className={`${cinzel.className} ${styles.characterName}`}>{personagem.nome}</h3>
+                <h3 className={`${displayFont.className} ${styles.characterName}`}>{personagem.nome}</h3>
                 <p className={styles.characterDescription}>{personagem.resumo}</p>
               </div>
             </article>

@@ -1,0 +1,14 @@
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: url('/textures/paper-grain.svg') repeat;
+  background-size: 240px 240px;
+  opacity: var(--surface-grain-opacity, .035);
+  mix-blend-mode: soft-light;
+}
+
+@media (prefers-contrast: more), (forced-colors: active) {
+  .grain { display: none; }
+}

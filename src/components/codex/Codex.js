@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { cinzel, montserrat } from '@/config/fonts';
+import { displayFont, interfaceFont } from '@/config/fonts';
 import { todasCategorias } from '@/content/codex';
 import CodexDialog from './CodexDialog';
 
@@ -14,7 +14,7 @@ export default function Codex() {
   const conteudoAtual = todasCategorias.find(c => c.label === filtroAtivo)?.itens ?? [];
 
   return (
-    <main className={`bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ease-in-out pb-0
+    <main className={`bg-neutral-950 text-neutral-200 ${interfaceFont.className} transition-opacity duration-1000 ease-in-out pb-0
       opacity-100 reveal
     `}>
 
@@ -27,8 +27,8 @@ export default function Codex() {
             <div className="h-px w-8 bg-amber-700" />
           </span>
 
-          <h1 className={`${cinzel.className} text-5xl md:text-7xl text-white tracking-widest drop-shadow-lg`}>
-            O CÓDEX
+          <h1 className={`${displayFont.className} text-5xl md:text-7xl text-white tracking-widest drop-shadow-lg`}>
+            O Códex
           </h1>
 
           <div className="flex flex-wrap justify-center gap-4 pt-6">
@@ -91,7 +91,7 @@ export default function Codex() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
               <div className="absolute bottom-0 w-full p-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 <span className="text-amber-500 text-xs font-bold tracking-widest uppercase block mb-1">{item.titulo}</span>
-                <h3 className={`${cinzel.className} text-2xl text-white`}>{item.nome}</h3>
+                <h3 className={`${displayFont.className} text-2xl text-white`}>{item.nome}</h3>
               </div>
             </button>
           ))}

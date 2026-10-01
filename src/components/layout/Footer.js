@@ -1,6 +1,6 @@
 import NewsletterForm from '@/components/newsletter/NewsletterForm';
 import Link from 'next/link';
-import { cinzel, montserrat } from '@/config/fonts';
+import { displayFont, interfaceFont } from '@/config/fonts';
 import { navLinks } from '@/config/navigation';
 import { newsletterEnabled } from '@/config/features';
 import { redesSociaisPublicadas } from '@/content/redes-sociais';
@@ -8,7 +8,7 @@ import styles from './layout-shell.module.css';
 
 export default function Footer() {
   return (
-    <footer className={`${montserrat.className} ${styles.footer}`}>
+    <footer className={`${interfaceFont.className} ${styles.footer}`}>
       <div className={styles.footerInner}>
         <div className={styles.footerTopline}>
           <span>O fim é apenas o começo.</span>
@@ -18,7 +18,7 @@ export default function Footer() {
 
         <div className={styles.footerGrid}>
           <div className={styles.footerBrand}>
-            <Link href="/santuario" className={`${cinzel.className} ${styles.footerTitle}`}>O Trono<br />Vazio<span aria-hidden="true">.</span></Link>
+            <Link href="/santuario" className={`${displayFont.className} ${styles.footerTitle}`}>O Trono<br />Vazio<span aria-hidden="true">.</span></Link>
             <p>Uma saga de dark fantasy. Um mundo marcado pela escuridão. Histórias que permanecem depois da última página.</p>
             <span className={styles.authorCredit}>Um universo de Danilo Simões</span>
           </div>

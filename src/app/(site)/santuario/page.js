@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { pageMetadata } from '@/config/site';
 import { newsletterEnabled } from '@/config/features';
-import { cinzel, montserrat } from '@/config/fonts';
+import { displayFont, interfaceFont } from '@/config/fonts';
 import CharacterCarousel from '@/components/santuario/CharacterCarousel';
 import AtmosphereBook from '@/components/santuario/AtmosphereBook';
 import NewsletterForm from '@/components/newsletter/NewsletterForm';
@@ -12,7 +12,7 @@ export const metadata = pageMetadata('O Santuário', 'Conheça O Trono Vazio, se
 
 export default function SantuarioHome() {
   return (
-    <main className={`${styles.sanctuary} ${montserrat.className}`}>
+    <main className={`${styles.sanctuary} ${interfaceFont.className}`}>
       <section className={styles.hero} aria-labelledby="tomo-title">
         <div className={styles.heroBackdrop} aria-hidden="true">
           <Image src="/capa-biblioteca.png" alt="" fill sizes="100vw" className={styles.backdropImage} priority />
@@ -20,10 +20,10 @@ export default function SantuarioHome() {
         <div className={styles.heroGrid}>
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}><span /> O Santuário <span className={styles.eyebrowDetail}>Vol. I</span></p>
-            <p className={styles.overline}>Inicie a jornada</p>
-            <h1 id="tomo-title" className={`${cinzel.className} ${styles.heroTitle}`}>O Tomo<br /><em>Principal.</em></h1>
+            <p className={styles.overline}>Um romance de dark fantasy</p>
+            <h1 id="tomo-title" className={`${displayFont.className} ${styles.heroTitle}`}>O Trono<br /><em>Vazio.</em></h1>
             <p className={styles.heroDescription}>
-              Mergulhe nas crônicas esquecidas. Acompanhe a jornada onde luz e sombras colidem, e descubra os segredos que aguardam nas entrelinhas da obra completa.
+              Há destinos que se cruzam nas sombras e segredos que resistem ao tempo. Leia o primeiro capítulo de O Trono Vazio e conheça as vozes desta história.
             </p>
             <div className={styles.heroActions}>
               <Link href="/leitura" className={styles.primaryAction}>Ler agora <span aria-hidden="true">↗</span></Link>
@@ -46,8 +46,8 @@ export default function SantuarioHome() {
         <div className={styles.launchOrnament} aria-hidden="true"><span>✧</span></div>
         <div className={styles.launchInner}>
           <p className={styles.eyebrow}>O próximo capítulo</p>
-          <h2 id="launch-title" className={`${cinzel.className} ${styles.launchTitle}`}>{newsletterEnabled ? <>Seja o primeiro<br /><em>a saber.</em></> : <>A história está<br /><em>sendo forjada.</em></>}</h2>
-          <p className={styles.launchDescription}>{newsletterEnabled ? 'O Trono Vazio está sendo forjado. Entre para a lista e receba a notícia no momento em que o livro estiver disponível.' : 'O Santuário está em beta. Explore o primeiro capítulo, conheça os personagens e acompanhe o nascimento de O Trono Vazio nos bastidores.'}</p>
+          <h2 id="launch-title" className={`${displayFont.className} ${styles.launchTitle}`}>{newsletterEnabled ? <>Seja o primeiro<br /><em>a saber.</em></> : <>A história está<br /><em>sendo escrita.</em></>}</h2>
+          <p className={styles.launchDescription}>{newsletterEnabled ? 'O Trono Vazio está sendo escrito. Entre para a lista e receba a notícia no momento em que o livro estiver disponível.' : 'O livro está em criação. Leia o primeiro capítulo, conheça os personagens e acompanhe a escrita de O Trono Vazio nos bastidores.'}</p>
           <NewsletterForm variant="launch" />
           <p className={styles.launchNote}>{newsletterEnabled ? 'Das sombras, diretamente para você.' : 'Este universo continua a crescer.'}</p>
         </div>

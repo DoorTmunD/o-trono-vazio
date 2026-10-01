@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { categorias, posts } from '@/content/posts';
-import { cinzel, montserrat } from '@/config/fonts';
+import { displayFont, interfaceFont } from '@/config/fonts';
 
 export default function Bastidores() {
   const [filtroAtivo, setFiltroAtivo] = useState('Todos');
@@ -14,7 +14,7 @@ export default function Bastidores() {
     : posts.filter(post => post.tag === filtroAtivo);
 
   return (
-    <main className={`bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 ease-in-out pb-0
+    <main className={`bg-neutral-950 text-neutral-200 ${interfaceFont.className} transition-opacity duration-1000 ease-in-out pb-0
       opacity-100 reveal
     `}>
 
@@ -29,8 +29,8 @@ export default function Bastidores() {
             <div className="h-px w-8 bg-amber-700" />
           </span>
 
-          <h1 className={`${cinzel.className} text-4xl sm:text-5xl md:text-7xl text-white tracking-widest drop-shadow-lg`}>
-            BASTIDORES
+          <h1 className={`${displayFont.className} text-4xl sm:text-5xl md:text-7xl text-white tracking-widest drop-shadow-lg`}>
+            Bastidores
           </h1>
 
           {/* Filtros */}
@@ -73,7 +73,7 @@ export default function Bastidores() {
               <div className="absolute left-0 md:left-1/2 w-4 h-4 bg-black border-2 border-red-800 rounded-full -translate-x-1/2 mt-6 md:mt-0 z-20 group-hover:bg-amber-500 group-hover:border-amber-500 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.8)] transition-all duration-500" />
 
               <div className={`w-full md:w-[45%] pl-10 md:pl-0 ${index % 2 === 0 ? 'md:text-right md:pr-16' : 'md:text-left md:pl-16 md:order-last'}`}>
-                <span className={`${cinzel.className} text-neutral-400 text-xl tracking-widest block mb-4 md:mb-0 mt-4 md:mt-0 group-hover:text-white transition-colors duration-500`}>
+                <span className={`${displayFont.className} text-neutral-400 text-xl tracking-widest block mb-4 md:mb-0 mt-4 md:mt-0 group-hover:text-white transition-colors duration-500`}>
                   {post.data}
                 </span>
               </div>
@@ -98,7 +98,7 @@ export default function Bastidores() {
                     <span className="inline-block px-3 py-1 bg-red-950/40 text-red-500 border border-red-900/30 text-xs font-bold tracking-widest uppercase mb-4 rounded-sm">
                       {post.tag}
                     </span>
-                    <h3 className={`${cinzel.className} text-2xl text-white mb-6 group-hover:text-amber-500 transition-colors duration-500`}>
+                    <h3 className={`${displayFont.className} text-2xl text-white mb-6 group-hover:text-amber-500 transition-colors duration-500`}>
                       {post.titulo}
                     </h3>
                     <div className="text-neutral-400 font-light leading-loose text-sm space-y-4">

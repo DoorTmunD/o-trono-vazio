@@ -1,23 +1,13 @@
 .scene { position: relative; width: 100%; height: 510px; isolation: isolate; touch-action: pan-y; }
 .canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
-.aura { position: absolute; inset: 5% -5% 8%; z-index: -1; background: radial-gradient(ellipse at 50% 40%, #a88b5420, #8d74380a 40%, transparent 65%); }
-.orbit { position: absolute; width: 82%; aspect-ratio: 1; border: 1px solid #ac91682d; border-radius: 50%; left: 9%; top: 50%; transform: translateY(-52%) rotate(-20deg); }
-.orbit::before { content: ''; position: absolute; inset: 12px; border: 1px solid #ac916816; border-radius: 50%; }
-.orbit::after { content: ''; position: absolute; inset: -16px; border: 1px dashed #ac916816; border-radius: 50%; }
-.orbit span { position: absolute; width: 5px; height: 5px; border: 1px solid #c0a77f; background: #151513; transform: rotate(45deg); }
-.orbit span:first-child { top: 15%; left: 15%; }
-.orbit span:nth-child(2) { right: 15%; bottom: 15%; }
-.orbit i { position: absolute; bottom: -10px; left: 50%; color: #b9a078; background: #0d0e0e; padding: 0 6px; font-size: 12px; font-style: normal; }
-.topLabel { position: absolute; display: flex; align-items: center; justify-content: center; gap: 13px; top: 1%; width: 100%; color: #a39278; font-size: 7px; text-transform: uppercase; letter-spacing: .28em; }
-.topLabel span { width: 20px; height: 1px; background: #ad94623b; }
-.shadow { position: absolute; bottom: 14%; left: 24%; width: 52%; height: 6%; background: #000; filter: blur(14px); opacity: .8; border-radius: 50%; }
-.sceneControls { position: absolute; bottom: 7%; display: flex; align-items: center; justify-content: center; gap: 15px; width: 100%; z-index: 3; }
-.hint { font-size: 7px; letter-spacing: .08em; color: #9a9283; }
-.motionButton { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; min-width: 44px; color: #b9a88d; font: inherit; font-size: 10px; padding: 8px 10px; border: 1px solid #b9a07830; background: #101111b3; cursor: pointer; transition: color .2s, border-color .2s; }
-.motionButton:hover { color: #eee8dc; border-color: #b9a078; }
+.light { position: absolute; inset: 8% -5% 9%; z-index: -1; background: radial-gradient(ellipse at 42% 44%, #a99c8310, #77736a05 39%, transparent 67%); }
+.shadow { position: absolute; top: 65%; left: 16%; width: 68%; height: 8%; z-index: 1; background: radial-gradient(ellipse, #000b 0%, #0006 36%, transparent 70%); filter: blur(9px); transform: rotate(-2deg); }
+.sceneControls { position: absolute; bottom: 10%; display: flex; justify-content: center; width: 100%; z-index: 3; }
+.motionButton { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; min-width: 44px; color: #a59f91; font: inherit; font-size: 10px; letter-spacing: .02em; padding: 8px 12px; border: 1px solid transparent; border-radius: 2px; background: transparent; cursor: pointer; transition: color .2s, border-color .2s; }
+.motionButton:hover { color: #e2dccf; border-color: #b6aa8d42; }
+.motionButton:focus-visible { outline: 1px solid #b6aa8d; outline-offset: 4px; }
 .motionButton svg { width: 12px; height: 12px; }
-.fallback { position: absolute; inset: 15% 0 0; text-align: center; font-size: 200px; color: #b9a078; text-shadow: 0 20px 35px #000; }
+.fallback { position: absolute; width: 86%; height: 70%; left: 7%; top: 12%; z-index: 2; }
 .scene:has(.canvas[data-ready='true']) .fallback { visibility: hidden; }
-@media (max-width: 1100px) and (min-width: 761px) { .scene { height: 450px; } .orbit { width: 92%; left: 4%; } }
-@media (max-width: 760px) { .scene { height: 340px; max-width: 420px; margin-inline: auto; } .orbit { width: 76%; left: 12%; } .sceneControls { bottom: 8%; } .topLabel { top: 4%; font-size: 6px; } .fallback { font-size: 140px; } .hint { display: none; } }
-@media (hover: none) { .hint { display: none; } }
+@media (max-width: 1100px) and (min-width: 761px) { .scene { height: 450px; } }
+@media (max-width: 760px) { .scene { height: 340px; max-width: 420px; margin-inline: auto; } .sceneControls { bottom: 6%; } .shadow { left: 13%; width: 74%; } }

@@ -1,6 +1,6 @@
 'use client';
 
-import { cinzel } from '@/config/fonts';
+import { displayFont } from '@/config/fonts';
 import styles from './santuario.module.css';
 
 export default function AtmosphereBook() {
@@ -25,7 +25,7 @@ export default function AtmosphereBook() {
       <div className={styles.bookHalo} />
       <div className={styles.orbit} />
       <div className={styles.bookShadow} />
-      <div className={`${styles.book} ${cinzel.className}`}>
+      <div className={`${styles.book} ${displayFont.className}`}>
         <div className={styles.bookBack} />
         <div className={styles.bookPages} />
         <div className={styles.bookSpine}><span>O Trono Vazio</span><i>✦</i><small>D. Simões</small></div>

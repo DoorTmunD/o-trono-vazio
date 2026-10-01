@@ -10,28 +10,27 @@
   background: #050709;
   color: var(--ivory);
 }
-.world, .shade, .grain, .curtain { position: absolute; inset: 0; pointer-events: none; }
-.world { z-index: -4; background: radial-gradient(ellipse at 50% 36%, #2b302c 0%, #10191d 34%, #050709 73%); transform-origin: 50% 40%; transition: transform 850ms cubic-bezier(.45,0,.7,1); }
+.world, .shade, .curtain { position: absolute; inset: 0; pointer-events: none; }
+.world { z-index: -4; background: radial-gradient(ellipse at 50% 36%, #302b23 0%, #171916 34%, #090b0b 73%); transform-origin: 50% 40%; transition: transform 850ms cubic-bezier(.45,0,.7,1); }
 .still { position: absolute; width: 100%; height: 105%; inset: -15% 0 auto; opacity: .9; }
 .shade { z-index: -2; background: linear-gradient(180deg, rgb(3 5 7 / 30%), transparent 22%, transparent 51%, rgb(3 5 7 / 24%) 63%, #060809 100%); }
-.grain { z-index: 3; opacity: .045; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.93' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' d='M0 0h220v220H0z' filter='url(%23grain)' opacity='.85'/%3E%3C/svg%3E"); background-size: 190px; mix-blend-mode: screen; }
 .header { position: absolute; inset: 0 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: clamp(26px, 4vh, 72px) clamp(24px, 4.5vw, 160px); }
 .wordmark { display: flex; align-items: center; gap: 14px; color: #ddd3bf; }
 .wordmark svg { width: 30px; height: 34px; color: var(--gold); }
-.wordmark span { font-size: clamp(15px, 1.2vw, 30px); letter-spacing: .05em; }
-.skip { display: inline-flex; align-items: center; gap: 13px; padding: 12px 0 12px 12px; font-size: clamp(11px, .78vw, 20px); color: #bcbcb3; transition: color 180ms; }
+.wordmark span { font-size: clamp(23px, 1.8vw, 42px); letter-spacing: .015em; }
+.skip { display: inline-flex; align-items: center; gap: 13px; padding: 12px 0 12px 12px; font-size: clamp(13px, .95vw, 24px); color: #bcbcb3; transition: color 180ms; }
 .skip:hover { color: white; }
 .skip span { font-size: 18px; }
 .content { position: absolute; inset: auto 24px clamp(100px, 10vh, 240px); text-align: center; display: flex; flex-direction: column; align-items: center; transition: opacity 480ms, transform 850ms cubic-bezier(.2,.7,.2,1); }
-.prelude { font-size: clamp(11px, .85vw, 21px); font-weight: 300; letter-spacing: .04em; color: #b5b4a7; margin: 0 0 16px; }
-.content h1 { font-size: clamp(40px, 4.5vw, 118px); font-weight: 400; line-height: 1.15; letter-spacing: -.035em; margin: 0; text-shadow: 0 5px 40px #030508; }
-.description { font-size: clamp(12px, .92vw, 23px); font-weight: 300; line-height: 1.7; color: #b8b6ad; margin: 15px 0 27px; }
-.enter { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 28px; min-width: clamp(246px, 18vw, 450px); min-height: clamp(56px, 4vw, 98px); padding: 16px 26px; border: 1px solid #ccb78f; border-radius: 2px; background: #dac9a6; color: #161918; font-size: clamp(12px, .87vw, 23px); font-weight: 500; box-shadow: inset 0 1px 0 #f5e9d1, 0 0 42px rgb(168 137 84 / 9%); transition: background 240ms, box-shadow 240ms, transform 240ms; }
-.enter:hover { background: #ecdfc5; box-shadow: inset 0 1px 0 #fff8e8, 0 0 45px rgb(191 159 103 / 20%); transform: translateY(-2px); }
+.prelude { font-family: var(--font-reading), Georgia, serif; font-style: italic; font-size: clamp(12px, .95vw, 23px); font-weight: 400; letter-spacing: 0; color: #b5b4a7; margin: 0 0 16px; }
+.content h1 { font-size: clamp(46px, 5.4vw, 138px); font-weight: 400; line-height: 1.15; letter-spacing: -.035em; margin: 0; text-shadow: 0 5px 40px #030508; }
+.description { font-size: clamp(15px, 1.05vw, 26px); font-weight: 400; line-height: 1.7; color: #b8b6ad; margin: 15px 0 27px; }
+.enter { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 38px; min-width: clamp(246px, 18vw, 450px); min-height: clamp(54px, 4vw, 98px); padding: 16px 26px; border: 1px solid #c1b59b; background: #d0c5af; color: #24231f; font-size: clamp(14px, 1vw, 25px); font-weight: 500; transition: background 240ms, border-color 240ms; }
+.enter:hover { background: #e1d8c5; border-color: #e1d8c5; }
 .enter:active { transform: translateY(0); }
 .enter:focus-visible { outline: 2px solid white; outline-offset: 6px; }
 .enter[aria-disabled] { pointer-events: none; }
-.footer { position: absolute; inset: auto 0 0; padding: 25px clamp(24px, 4.5vw, 160px) max(25px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; font-size: clamp(10px, .72vw, 18px); color: #8c928f; }
+.footer { position: absolute; inset: auto 0 0; padding: 25px clamp(24px, 4.5vw, 160px) max(25px, env(safe-area-inset-bottom)); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; font-size: clamp(12px, .85vw, 21px); color: #8c928f; }
 .motion { justify-self: start; display: inline-flex; align-items: center; gap: 9px; padding: 10px 0; border: 0; background: transparent; color: #bec3ba; cursor: pointer; }
 .motion:hover { color: #fff; }
 .motion svg { width: 15px; height: 15px; }
@@ -48,14 +47,14 @@
   .header { padding: max(22px, env(safe-area-inset-top)) 22px 20px; gap: 14px; }
   .wordmark { gap: 9px; }
   .wordmark svg { width: 24px; height: 28px; }
-  .wordmark span { font-size: 13px; }
-  .skip { font-size: 10px; gap: 7px; }
+  .wordmark span { font-size: 21px; }
+  .skip { font-size: 12px; gap: 7px; }
   .content { inset: auto 20px 102px; }
-  .prelude { font-size: 10px; margin-bottom: 13px; }
-  .content h1 { max-width: 340px; font-size: clamp(32px, 8.1vw, 48px); line-height: 1.2; }
-  .description { max-width: 270px; font-size: 11px; line-height: 1.8; margin: 14px 0 25px; }
+  .prelude { font-size: 11px; margin-bottom: 13px; }
+  .content h1 { max-width: 340px; font-size: clamp(38px, 10.2vw, 54px); line-height: 1.2; }
+  .description { max-width: 280px; font-size: 14px; line-height: 1.8; margin: 14px 0 25px; }
   .enter { min-width: 242px; min-height: 55px; }
-  .footer { grid-template-columns: 1fr auto; padding: 18px 22px max(22px, env(safe-area-inset-bottom)); gap: 10px; font-size: 9px; }
+  .footer { grid-template-columns: 1fr auto; padding: 18px 22px max(22px, env(safe-area-inset-bottom)); gap: 10px; font-size: 11px; }
   .credit { text-align: right; max-width: 130px; line-height: 1.7; }
   .hint { display: none; }
   .motion { gap: 5px; }

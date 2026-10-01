@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cinzel } from '@/config/fonts';
+import { displayFont } from '@/config/fonts';
 import { navLinks } from '@/config/navigation';
 import styles from './layout-shell.module.css';
 
@@ -40,7 +40,7 @@ function Navigation({ pathname }) {
         <Link href="/santuario" className={styles.brand} aria-label="O Trono Vazio — início">
           <span className={styles.brandMark}><CrownMark /></span>
           <span className={styles.brandText}>
-            <span className={`${cinzel.className} ${styles.brandTitle}`}>O Trono Vazio</span>
+            <span className={`${displayFont.className} ${styles.brandTitle}`}>O Trono Vazio</span>
             <span className={styles.brandSubline}>Uma saga de dark fantasy</span>
           </span>
         </Link>
@@ -96,7 +96,7 @@ function Navigation({ pathname }) {
               className={`${styles.mobileLink} ${ativo(link.href) ? styles.activeLink : ''}`}
             >
               <span className={styles.linkNumber} aria-hidden="true">0{index + 1}</span>
-              <span className={cinzel.className}>{link.label}</span>
+              <span className={displayFont.className}>{link.label}</span>
               <span className={styles.linkArrow} aria-hidden="true">↗</span>
             </Link>
           ))}

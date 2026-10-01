@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { cinzel, montserrat, lora } from '@/config/fonts';
+import { displayFont, interfaceFont, readingFont } from '@/config/fonts';
 import { calcularTempo } from '@/lib/leitura';
 
 export default function Leitura({ capitulos }) {
@@ -50,7 +50,7 @@ export default function Leitura({ capitulos }) {
   const toggleCapitulo = (id) => abrirCapitulo(capituloAberto === id ? null : id);
 
   return (
-    <main className={`bg-neutral-950 text-neutral-200 ${montserrat.className} transition-opacity duration-1000 opacity-100 reveal`}>
+    <main className={`bg-neutral-950 text-neutral-200 ${interfaceFont.className} transition-opacity duration-1000 opacity-100 reveal`}>
 
       {/* Barra de progresso de leitura */}
       <div className="fixed top-0 left-0 right-0 z-[60] h-0.5 bg-neutral-900 pointer-events-none">
@@ -69,8 +69,8 @@ export default function Leitura({ capitulos }) {
             Obra Completa
             <div className="h-px w-8 bg-amber-700" />
           </span>
-          <h1 className={`${cinzel.className} text-5xl md:text-7xl text-white tracking-widest`}>
-            LEITURA
+          <h1 className={`${displayFont.className} text-5xl md:text-7xl text-white tracking-widest`}>
+            Leitura
           </h1>
           <p className="text-neutral-500 font-light text-sm tracking-wider max-w-md mx-auto">
             Os capítulos são liberados conforme a obra avança. A escuridão se revela aos poucos.
@@ -112,7 +112,7 @@ export default function Leitura({ capitulos }) {
                   <span className="text-neutral-600 text-xs tracking-widest uppercase font-bold shrink-0">
                     {cap.numero}
                   </span>
-                  <span className={`${cinzel.className} text-lg text-white`}>
+                  <span className={`${displayFont.className} text-lg text-white`}>
                     {cap.titulo}
                   </span>
                 </div>
@@ -137,11 +137,11 @@ export default function Leitura({ capitulos }) {
               {disponivel && aberto && (
                 <div id={`texto-cap-${cap.id}`} className="border-t border-neutral-800/60 px-6 pb-12 pt-8">
                   {cap.epigrafe && (
-                    <p className={`${lora.className} text-neutral-500 italic text-sm mb-10 pl-4 border-l border-amber-800/40 leading-relaxed`}>
+                    <p className={`${readingFont.className} text-neutral-500 italic text-sm mb-10 pl-4 border-l border-amber-800/40 leading-relaxed`}>
                       {cap.epigrafe}
                     </p>
                   )}
-                  <div className={`${lora.className} text-neutral-300 leading-[1.95] text-[1.05rem] space-y-6`}>
+                  <div className={`${readingFont.className} text-neutral-300 leading-[1.95] text-[1.05rem] space-y-6`}>
                     {cap.texto?.map((paragrafo, i) => (
                       <p key={i}>{paragrafo}</p>
                     ))}
@@ -170,7 +170,7 @@ export default function Leitura({ capitulos }) {
                       {capPrev && capPrev.status === 'disponivel' && (
                         <button onClick={() => abrirCapitulo(capPrev.id)} className="text-left group">
                           <span className="text-xs text-neutral-600 tracking-widest uppercase block mb-1">← Anterior</span>
-                          <span className={`${cinzel.className} text-sm text-neutral-400 group-hover:text-white transition-colors`}>
+                          <span className={`${displayFont.className} text-sm text-neutral-400 group-hover:text-white transition-colors`}>
                             {capPrev.titulo}
                           </span>
                         </button>
@@ -181,14 +181,14 @@ export default function Leitura({ capitulos }) {
                         capNext.status === 'disponivel' ? (
                           <button onClick={() => abrirCapitulo(capNext.id)} className="text-right group">
                             <span className="text-xs text-neutral-600 tracking-widest uppercase block mb-1">Próximo →</span>
-                            <span className={`${cinzel.className} text-sm text-neutral-400 group-hover:text-white transition-colors`}>
+                            <span className={`${displayFont.className} text-sm text-neutral-400 group-hover:text-white transition-colors`}>
                               {capNext.titulo}
                             </span>
                           </button>
                         ) : (
                           <div>
                             <span className="text-xs text-neutral-700 tracking-widest uppercase block mb-1">Próximo →</span>
-                            <span className={`${cinzel.className} text-sm text-neutral-700 block`}>{capNext.titulo}</span>
+                            <span className={`${displayFont.className} text-sm text-neutral-700 block`}>{capNext.titulo}</span>
                             <span className="text-xs text-red-900/60 tracking-widest uppercase block mt-1">Em Breve</span>
                           </div>
                         )
